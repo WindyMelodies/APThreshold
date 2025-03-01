@@ -31,12 +31,13 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
 1. Install Anaconda and Git  
     Download Anaconda from https://www.anaconda.com/download/success.  
     Download Git from https://git-scm.com/downloads.  
-2. Clone the APThreshold Repository  
+2. Clone the APThreshold Repository    
+    Open a terminal or command prompt and run:
     ```commandline
    git clone https://github.com/WindyMelodies/APThreshold.git
    ```
 3. Set up conda environment  
-    Open a terminal or command prompt and run:
+    
     ```commandline
     conda env create --name APThreshold --file environment.yml
     conda activate APThreshold
@@ -48,6 +49,16 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
    ```
 
 ### Option 2: Running as a Standalone .exe File (Windows Only)
+1. Download the executable
+    [APThreshold.zip]()(contains the standalone version of APThreshold)
+2. Extract the .zip file  
+3. Run APThreshold  
+    Click the 'APThreshold.exe' file.
+    
+
+
+> **Note:** The standalone version is currently available for Windows only.  
+> For Linux and macOS users, please follow *Option 1: Running from Source Code*.
 
 ## Support
 
@@ -57,6 +68,10 @@ If you are having issues, please contact us at guoshengyi@tju.edu.cn or pengzhan
 
 If our software is helpful to your research, please cite the following reference in which we present APThreshold and demonstrate its ability with several use cases:
 > ... Action potential threshold dynamics analyzer (APThreshold) ... todo
+
+## Author
+Guosheng Yi, Pengzhan Zhang and Ruifeng Bai*  
+School of Electrical and Information Engineering, Tianjin University, Tianjin, People’s Republic of China
 
 ## License
 

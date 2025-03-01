@@ -6,7 +6,7 @@ import os
 import sys
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 dir_path = os.getcwd()
 dir_name_list = ['ui']
 for i in dir_name_list:

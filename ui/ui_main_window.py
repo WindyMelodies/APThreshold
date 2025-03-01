@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QDo
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
     QSpinBox, QStatusBar, QTabWidget, QTableWidget,
     QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
-import apprcc_rc
+import ui.apprcc_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

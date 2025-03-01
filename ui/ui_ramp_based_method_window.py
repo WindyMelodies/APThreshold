@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QDoubleSpinBox, QGridLay
     QGroupBox, QHeaderView, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
-import apprcc_rc
+import ui.apprcc_rc
 
 class Ui_RampMethodWindow(object):
     def setupUi(self, RampMethodWindow):
