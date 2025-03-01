@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>setwidget_spike_threshold</class>
+ <widget class="QWidget" name="setwidget_spike_threshold">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>697</width>
+    <height>433</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Set axes</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/apprcc.qrc">
+    <normaloff>:/APThrehold_icon.png</normaloff>:/APThrehold_icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#setwidget_spike_threshold {background-color: #E4F4FE}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_setwidget_get_aps">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_apply">
+     <property name="text">
+      <string>Apply</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="pushButton_reset">
+     <property name="text">
+      <string>Reset</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QToolBox" name="toolBox_plot_set">
+     <property name="styleSheet">
+      <string notr="true">QToolBoxButton {min-height: 25px;}
+QToolBox::tab {
+    background-color: #414656;  /* Tab background color */
+    color: white;  /* Tab text color */
+	min-height: 30px;
+    padding: 5px;  /* Padding around the text */
+    height: 40px;  /* Set the minimum height of the tab */
+	
+}
+</string>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page_figure_1_1">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>697</width>
+        <height>280</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Figure in (1, 1)</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_page_figure_1_1">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton_add_plot_figure_1_1">
+           <property name="text">
+            <string>Add plot</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_clear_figure_1_1">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QScrollArea" name="scrollArea_figure_1_1">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_figure_1_1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>677</width>
+            <height>202</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_figure_1_1"/>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_points_figure_1_1">
+           <property name="text">
+            <string>Mark the threshold points</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_range_figure_1_1">
+           <property name="text">
+            <string>Mark the threshold region</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_figure_1_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>697</width>
+        <height>280</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Figure in (1, 2)</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_page_figure_1_2">
+       <item row="2" column="0">
+        <widget class="QScrollArea" name="scrollArea_figure_1_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_figure_1_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>677</width>
+            <height>202</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_figure_1_2"/>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_points_figure_1_2">
+           <property name="text">
+            <string>Mark the threshold points</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_range_figure_1_2">
+           <property name="text">
+            <string>Mark the threshold region</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButton_add_plot_figure_1_2">
+           <property name="text">
+            <string>Add plot</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_clear_figure_1_2">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_figure_2_1">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>697</width>
+        <height>280</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Figure in (2, 1)</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_page_figure_2_1">
+       <item row="2" column="0">
+        <widget class="QScrollArea" name="scrollArea_figure_2_1">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_figure_2_1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>677</width>
+            <height>202</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_figure_2_1"/>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="pushButton_add_plot_figure_2_1">
+           <property name="text">
+            <string>Add plot</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_clear_figure_2_1">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_points_figure_2_1">
+           <property name="text">
+            <string>Mark the threshold points</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_range_figure_2_1">
+           <property name="text">
+            <string>Mark the threshold region</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_figure_2_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>697</width>
+        <height>280</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Figure in (2, 2)</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_page_figure_2_2">
+       <item row="2" column="0">
+        <widget class="QScrollArea" name="scrollArea_figure_2_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_figure_2_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>677</width>
+            <height>202</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_figure_2_2"/>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="pushButton_add_plot_figure_2_2">
+           <property name="text">
+            <string>Add plot</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_clear_figure_2_2">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_points_figure_2_2">
+           <property name="text">
+            <string>Mark the threshold points</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_threshold_range_figure_2_2">
+           <property name="text">
+            <string>Mark the threshold region</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../resources/apprcc.qrc"/>
+ </resources>
+ <connections/>
+</ui>

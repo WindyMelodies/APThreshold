@@ -1,0 +1,5 @@
+1、‘win’+‘r’，输入cmd调出命令行管理器
+2、输入以下代码：
+activate zpz
+cd /d path_PlatformDevelopment
+python main.py
