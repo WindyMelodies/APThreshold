@@ -32,17 +32,18 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
     Download Anaconda from https://www.anaconda.com/download/success.  
     Download Git from https://git-scm.com/downloads.  
 2. Clone the APThreshold Repository  
-    ```bash
+    ```commandline
    git clone https://github.com/WindyMelodies/APThreshold.git
    ```
 3. Set up conda environment  
     Open a terminal or command prompt and run:
-    ```bash
+    ```commandline
     conda env create --name APThreshold --file environment.yml
     conda activate APThreshold
     ```
 4. Run APThreshold
-    ```bash
+    ```commandline
+   cd APThreshold
    python main.py
    ```
 
