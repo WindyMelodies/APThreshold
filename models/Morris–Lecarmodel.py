@@ -5,7 +5,6 @@ class Model:
     number_of_compartment = 1
     dynamic_variables = ['Vm', 'n']
     initial_value = [-64.99972243, 0.317681168]
-
     gl = 2
     gca = 4
     gk = 8
