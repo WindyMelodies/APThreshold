@@ -1,11 +1,5 @@
 import numpy as np
 
-"""
-参考文献：
-《Structural stability for the Morris–Lecar neuron model》
-《神经电场调节理论与分析》
-"""
-
 
 class Model:
     number_of_compartment = 1
