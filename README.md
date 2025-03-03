@@ -62,7 +62,7 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
 
 ## Support
 
-If you are having issues, please contact us at guoshengyi@tju.edu.cn or pengzhanzhang@tju.edu.cn.
+If you have issues, please contact us at guoshengyi@tju.edu.cn or pengzhanzhang@tju.edu.cn.
 
 ## Cite
 
