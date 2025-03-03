@@ -25,7 +25,7 @@ types.
 
 ## Installation
 The software supports installation and execution across multiple operating systems (Windows, Linux, and
-macOS). We provide two options to launch APThreshold: (1) Clone the [source code]() and run it in a Python environment. (2)  Run the pre-built APThreshold.exe file for quick execution on Windows.
+macOS). We provide two options to launch APThreshold: (1) Clone the [source code](https://github.com/WindyMelodies/APThreshold.git) and run it in a Python environment. (2)  Run the pre-built APThreshold.exe file for quick execution on Windows.
 ### Option 1: Running from Source Code (All Platforms)
 We recommend using Anaconda to deploy the Python environment for APThreshold.
 1. Install Anaconda and Git  
