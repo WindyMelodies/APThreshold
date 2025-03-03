@@ -1,5 +1,5 @@
 """Class for extracting """
-from ui_extract_AP_window import Ui_Form_extract_AP
+from ui import Ui_Form_extract_AP
 from PySide6.QtWidgets import QWidget
 from PySide6 import QtCore
 

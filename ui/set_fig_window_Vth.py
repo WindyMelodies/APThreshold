@@ -6,8 +6,8 @@ This window is triggered when the 'Set Plot' button is clicked.
 import copy
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QWidget, QPushButton, QTextBrowser, QSizePolicy
-from set_axis_window_Vth import SetAxisWindowVth
-from ui_set_fig_window_Vth import Ui_setwidget_spike_threshold
+from .set_axis_window_Vth import SetAxisWindowVth
+from .ui_set_fig_window_Vth import Ui_setwidget_spike_threshold
 from utils.plotting import Plotting
 
 

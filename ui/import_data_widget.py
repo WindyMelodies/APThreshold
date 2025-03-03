@@ -10,7 +10,7 @@ from utils.curvature_based_method import calculate_all_ISI, calculate_extracted_
 from utils.condition_check import spike_check
 import unicodeit
 from PySide6.QtWidgets import QWidget, QFileDialog, QMessageBox
-from ui_import_data_window import Ui_import_datas_widget
+from .ui_import_data_window import Ui_import_datas_widget
 from utils.tools import derivative, round_timestamp, get_decimal_digits
 
 
@@ -60,7 +60,7 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
         """
         file_dialog = QFileDialog(self)
         file_dialog.setFileMode(QFileDialog.ExistingFile)
-        data_path = os.path.join(os.path.abspath('..'), 'data')
+        data_path = os.path.join(os.path.abspath('.'), 'data')
         file_dialog.setDirectory(data_path)
         file_dialog.setNameFilter('(*.dat *.mat *.txt *.bin)')
         file_dialog.show()

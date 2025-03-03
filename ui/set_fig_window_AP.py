@@ -3,10 +3,10 @@ A window class for customizing visualization settings in the 'Action Potential' 
 This window is triggered when the 'Set Plot' button is clicked.
 """
 import copy
-from set_axis_window import SetAxisWindow
+from .set_axis_window import SetAxisWindow
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QWidget, QPushButton, QTextBrowser, QSizePolicy
-from ui_set_fig_window import Ui_setwidget_get_aps
+from .ui_set_fig_window import Ui_setwidget_get_aps
 from utils.plotting import Plotting
 
 

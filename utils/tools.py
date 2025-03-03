@@ -43,7 +43,7 @@ def get_current_names(compartment_num):
 
 
 def get_model_names():
-    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
+    path = os.path.join(os.path.abspath('.'), 'models')
     name_list = []
     for filename in os.listdir(path):
         if filename.endswith('model.py') or 'model' in filename:

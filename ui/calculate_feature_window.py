@@ -3,8 +3,6 @@ Class for calculating features of spike threshold dynamics, which include the de
 membrane voltage (<Vm>) of action potentials, based on user-defined options.
 """
 import logging
-import os
-import pickle
 import numpy as np
 import unicodeit
 from PySide6.QtWidgets import QWidget

@@ -86,7 +86,6 @@ class Model:
         Vm = y[0]
         w = y[1]
         z = y[2]
-        # print(t)
         dy = np.zeros((3,))
         current_index = min(int(round(t / dt, 0)), len(Istim[0]) - 1)
         I = Istim[0][current_index]

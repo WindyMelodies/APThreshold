@@ -7,13 +7,13 @@ from PySide6.QtCore import QRect
 from PySide6.QtWidgets import QWidget, QMainWindow, QGridLayout, QLabel, QSpinBox, QComboBox, \
     QDoubleSpinBox, QPushButton, QMessageBox, QTableWidgetItem, QAbstractItemView, QTabWidget, QHeaderView
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from ui import CalculateFeatureWindow
-from extract_AP_window import ExtractAPWindow
-from import_data_widget import ImportDataWidget
-from ramp_based_method_window import RampMethodWindow
-from set_fig_window_AP import SetFigWindowAP
-from set_fig_window_Vth import SetFigWindowVth
-from ui_main_window import Ui_MainWindow
+from .calculate_feature_window import CalculateFeatureWindow
+from ui import ExtractAPWindow
+from .import_data_widget import ImportDataWidget
+from .ramp_based_method_window import RampMethodWindow
+from .set_fig_window_AP import SetFigWindowAP
+from .set_fig_window_Vth import SetFigWindowVth
+from .ui_main_window import Ui_MainWindow
 from utils.custom_navigation_toolbar import CustomNavigationToolbar as NavigationToolbar
 from utils.curvature_based_method import MethodBasedOnCurvature
 from utils.ode_solver import Model

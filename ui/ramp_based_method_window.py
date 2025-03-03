@@ -4,10 +4,10 @@ import logging
 import time as current_time
 import unicodeit
 from PySide6.QtWidgets import QWidget, QMessageBox
-from calculate_feature_window import CalculateFeatureWindow
+from .calculate_feature_window import CalculateFeatureWindow
 from models.Stimulus import Stimulus
 from ui.set_fig_window_Vth import SetFigWindowVth
-from ui_ramp_based_method_window import Ui_RampMethodWindow
+from .ui_ramp_based_method_window import Ui_RampMethodWindow
 from utils.ode_solver import ODE_python_method, Euler_method, RK_method
 from utils.plotting import Plotting
 from utils.tools import *

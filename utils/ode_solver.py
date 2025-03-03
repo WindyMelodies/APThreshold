@@ -65,7 +65,7 @@ class Model:
     4. Organize the results into a dictionary for storage and further analysis.
     """
     flag = 'ap'
-    sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models'))
+    sys.path.append(os.path.join(os.path.abspath('.'), 'models'))
     labels = {'voltage': 'Membrane voltage(mV)', 'derivative voltage': '', 'ionic_current': 'Current(μA/cm^2)',
               'state': '', 'conductance': 'Conductance(mS/cm^2', 'Istim': 'Applied current(μA/cm^2)',
               'timestamp': 'Time(ms)'

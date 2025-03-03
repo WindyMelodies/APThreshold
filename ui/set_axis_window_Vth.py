@@ -1,7 +1,7 @@
 """Class for customize the coordinate axes of one plot. Besides, it provides some visualization options specific to
 spike threshold dynamics analysis, including linear fitting and spike threshold point and region display"""
 import logging
-from ui_set_axis_window_Vth import Ui_widget_Axis_Vth
+from .ui_set_axis_window_Vth import Ui_widget_Axis_Vth
 from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import QCloseEvent
 

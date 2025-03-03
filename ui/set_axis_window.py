@@ -1,7 +1,7 @@
 """Class for customize the coordinate axes of one plot"""
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QWidget
-from ui_set_axis_window import Ui_widget_Axis_AP
+from .ui_set_axis_window import Ui_widget_Axis_AP
 
 
 class SetAxisWindow(QWidget, Ui_widget_Axis_AP):
