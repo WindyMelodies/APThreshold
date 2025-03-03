@@ -68,7 +68,7 @@ If you have issues, please contact us at guoshengyi@tju.edu.cn or pengzhanzhang@
 
 If our software is helpful to your research, please cite the following reference in which we present APThreshold and demonstrate its ability with several use cases:
 > ... Action potential threshold dynamics analyzer (APThreshold) ... todo
-
+> 
 ## Author
 Guosheng Yi, Pengzhan Zhang and Ruifeng Bai*  
 School of Electrical and Information Engineering, Tianjin University, Tianjin, People’s Republic of China
