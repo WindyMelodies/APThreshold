@@ -1,0 +1,16 @@
+name: APThreshold
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy
+  - scipy
+  - pyside6=6.6.0
+  - scikit-learn
+  - h5py
+  - matplotlib
+  - pip
+  - pip:
+      - unicodeit
+
