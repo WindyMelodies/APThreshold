@@ -131,7 +131,14 @@ def get_timestamp_from_data(data):
 
 
 def get_max_num(array):
-    return max(array[array != None])
+    max = -np.inf
+    for i in range(len(array)):
+        if array[i] == None or array[i] == np.nan:
+            pass
+        else:
+            if max < array[i]:
+                max = array[i]
+    return max
 
 
 def save_to_mat(file_path, data):

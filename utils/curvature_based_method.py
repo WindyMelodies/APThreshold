@@ -289,12 +289,13 @@ class MethodBasedOnCurvature:
         for i in range(index_dvdt1_max, -1, -1):
             if dVdt_1[i] <= 0:
                 index_dvdt1_start = i + 1
+                break
             if i == 0:
                 index_dvdt1_start = i
         # Calculate the slope of the phase space
-        slope_array = (dVdt_2 / dVdt_1)[index_dvdt1_start:index_dvdt1_max + 1]
+        slope_array = (dVdt_2[index_dvdt1_start:index_dvdt1_max + 1] / dVdt_1[index_dvdt1_start:index_dvdt1_max + 1])
 
-        index_Vth = np.where(slope_array == max(slope_array))[0][0] + index_dvdt1_start
+        index_Vth = np.argmax(slope_array) + index_dvdt1_start
         Vth = voltage[index_Vth]
         timestamp_Vth = timestamp[index_Vth]
         return index_Vth, Vth, timestamp_Vth
@@ -325,23 +326,26 @@ class MethodBasedOnCurvature:
         for i in range(index_dvdt1_max, -1, -1):
             if dVdt_1[i] <= 0:
                 index_dvdt1_start = i + 1
+                break
             if i == 0:
                 index_dvdt1_start = i
         # Find the end of the region where dV/dt>0 in the phase space
-        for i in range(index_dvdt1_max, len(dVdt_1) - 1):
+        for i in range(index_dvdt1_max, len(dVdt_1) - 1, 1):
             if dVdt_1[i] <= 0:
                 index_dvdt1_end = i - 1
                 break
             if i == len(dVdt_1) - 2:
                 index_dvdt1_end = i
 
-        array = ((dVdt_1 * dVdt_3 - dVdt_2 ** 2) / (dVdt_1 ** 3))[index_dvdt1_start:index_dvdt1_end + 1]
+        array = ((dVdt_1[index_dvdt1_start:index_dvdt1_end + 1] * dVdt_3[index_dvdt1_start:index_dvdt1_end + 1] -
+                  dVdt_2[index_dvdt1_start:index_dvdt1_end + 1] ** 2) /
+                 (dVdt_1[index_dvdt1_start:index_dvdt1_end + 1] ** 3))
         # test the method
         # t_array = np.linspace(0, (len(array) - 1) * dt, len(array)) + min(timestamp) + index_dvdt1_start * dt
         # with open(r'D:\ProgramingProject\python\Platform_Development\results\MaximumSecondDerivativeMethod.pkl',
         #           'wb') as f:
         #     pickle.dump((array, t_array), f)
-        index_Vth = np.where(array == max(array))[0][0] + index_dvdt1_start
+        index_Vth = np.argmax(array) + index_dvdt1_start
         Vth = voltage[index_Vth]
         timestamp_Vth = timestamp[index_Vth]
         return index_Vth, Vth, timestamp_Vth
@@ -368,7 +372,7 @@ class MethodBasedOnCurvature:
         """
         # Only compute ISI if spikes exist
         if self.spike:
-            if self.spike_count >= 2:   # At least two spikes are required for ISI calculation
+            if self.spike_count >= 2:  # At least two spikes are required for ISI calculation
                 list_voltage_max, list_voltage_max_moment, list_index_voltage_max = peak_time(
                     spike_flag=self.spike_flag,
                     voltage=self.voltage,
@@ -382,7 +386,7 @@ class MethodBasedOnCurvature:
                                                      ISI_all=ISI_all,
                                                      voltage_option=self.voltage_option, data_source=self.data_source,
                                                      )
-                logging.info(f'ISI values for extracted action potentials: {ISI_APs}',)
+                logging.info(f'ISI values for extracted action potentials: {ISI_APs}', )
                 return ISI_APs
             else:
                 return np.full(len(self.AP), fill_value=None)
@@ -471,14 +475,14 @@ class MethodBasedOnCurvature:
             timestamp_Vth_superposition_list.append(timestamp_Vth_superposition)
         features = {'Vth': Vth_list, 'ISI': ISI, 'label': None}
         self.data['All'] = {'features': features,
-                             'voltage': {'voltage': self.voltage,
-                                         'V_superposition': V_superposition_list,
-                                         'label': 'Membrane Voltage(mV)'},
-                             'timestamp': {'timestamp_Vth': timestamp_Vth_list,
-                                           'timestamp': self.timestamp,
-                                           'timestamp_superposition': timestamp_superposition_list,
-                                           'timestamp_Vth_superposition': timestamp_Vth_superposition_list,
-                                           'label': 'time(ms)'}}
+                            'voltage': {'voltage': self.voltage,
+                                        'V_superposition': V_superposition_list,
+                                        'label': 'Membrane Voltage(mV)'},
+                            'timestamp': {'timestamp_Vth': timestamp_Vth_list,
+                                          'timestamp': self.timestamp,
+                                          'timestamp_superposition': timestamp_superposition_list,
+                                          'timestamp_Vth_superposition': timestamp_Vth_superposition_list,
+                                          'label': 'time(ms)'}}
 
     def get_figure_set_origin(self):
         fig_1_1 = {
@@ -489,9 +493,9 @@ class MethodBasedOnCurvature:
         fig_1_2 = {
         }
         fig_2_1 = {
-                   }
+        }
         fig_2_2 = {
-                   }
+        }
         self.figure_set_origin = {(1, 1): fig_1_1, (1, 2): fig_1_2, (2, 1): fig_2_1, (2, 2): fig_2_2}
         if self.main_window.figure_set_curvature == None:
             self.main_window.figure_set_curvature = self.figure_set_origin.copy()
