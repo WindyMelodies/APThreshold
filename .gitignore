@@ -9,3 +9,6 @@
 /resources/APThreshold_icon.ico
 /generate_exe_file.py
 /main.spec
+/utils/__pycache_
+/ui/__pycache_
+/models/__pycache_

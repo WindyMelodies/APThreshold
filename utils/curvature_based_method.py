@@ -1,5 +1,6 @@
 """Class for estimating spike threshold using waveform-curvature based method"""
 import logging
+import math
 from utils.condition_check import data_source_check, data_exists_check, spike_check
 from utils.tools import get_decimal_digits, get_voltage_from_AP_data, get_voltage_from_data, \
     get_timestamp_from_data, get_max_num
@@ -142,8 +143,8 @@ class MethodBasedOnCurvature:
                 'First derivative method: index: {}, spike threshold: {}, spike time: {}'.format(index, SpikeThreshold,
                                                                                                  t_Vth))
             self.AP[i]['index'] = index
-            self.AP[i]['features']['Vth'] = SpikeThreshold
-            self.AP[i]['timestamp']['timestamp_Vth'] = t_Vth
+            self.AP[i]['features']['Vth'] = [SpikeThreshold]
+            self.AP[i]['timestamp']['timestamp_Vth'] = [t_Vth]
 
     def method_2(self):
         """Second derivative method for estimating spike threshold"""
@@ -160,8 +161,8 @@ class MethodBasedOnCurvature:
                     dVdt=data['voltage'][unicodeit.replace('d^2V/dt^2')], voltage=data['voltage']['voltage'],
                     k_th=self.k_th, timestamp=data['timestamp']['timestamp'])
             self.AP[i]['index'] = index
-            self.AP[i]['features']['Vth'] = SpikeThreshold
-            self.AP[i]['timestamp']['timestamp_Vth'] = t_Vth
+            self.AP[i]['features']['Vth'] = [SpikeThreshold]
+            self.AP[i]['timestamp']['timestamp_Vth'] = [t_Vth]
 
     def method_3(self):
         """Third derivative method for estimating spike threshold"""
@@ -179,8 +180,8 @@ class MethodBasedOnCurvature:
                     dVdt=data['voltage'][unicodeit.replace('d^3V/dt^3')], voltage=data['voltage']['voltage'],
                     k_th=self.k_th, timestamp=data['timestamp']['timestamp'])
             self.AP[i]['index'] = index
-            self.AP[i]['features']['Vth'] = SpikeThreshold
-            self.AP[i]['timestamp']['timestamp_Vth'] = t_Vth
+            self.AP[i]['features']['Vth'] = [SpikeThreshold]
+            self.AP[i]['timestamp']['timestamp_Vth'] = [t_Vth]
 
     @staticmethod
     def temporal_derivative_method(dVdt, voltage, k_th, timestamp):
@@ -235,8 +236,8 @@ class MethodBasedOnCurvature:
                     dVdt_2=data['voltage'][unicodeit.replace('d^2V/dt^2')], timestamp=data['timestamp']['timestamp'],
                     dt=self.dt)
             self.AP[i]['index'] = index
-            self.AP[i]['features']['Vth'] = SpikeThreshold
-            self.AP[i]['timestamp']['timestamp_Vth'] = t_Vth
+            self.AP[i]['features']['Vth'] = [SpikeThreshold]
+            self.AP[i]['timestamp']['timestamp_Vth'] = [t_Vth]
 
     def method_5(self):
         """Maximal slope method for estimating spike threshold"""
@@ -260,8 +261,8 @@ class MethodBasedOnCurvature:
                     dVdt_3=data['voltage'][unicodeit.replace('d^3V/dt^3')], timestamp=data['timestamp']['timestamp'],
                     dt=self.dt)
             self.AP[i]['index'] = index
-            self.AP[i]['features']['Vth'] = SpikeThreshold
-            self.AP[i]['timestamp']['timestamp_Vth'] = t_Vth
+            self.AP[i]['features']['Vth'] = [SpikeThreshold]
+            self.AP[i]['timestamp']['timestamp_Vth'] = [t_Vth]
 
     @staticmethod
     def maximum_slope_method_based_on_phase_space(voltage, dVdt_1, dVdt_2, timestamp, dt):
@@ -285,14 +286,15 @@ class MethodBasedOnCurvature:
             The time corresponding to spike threshold
         """
         index_dvdt1_max = list(dVdt_1).index(get_max_num(dVdt_1))
-        # Find the start of the region where dV/dt>0 in the phase space
+        # Find the start of the region where d2V/dt2>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
-            if dVdt_1[i] <= 0:
+            if dVdt_2[i] <= 0:
                 index_dvdt1_start = i + 1
                 break
             if i == 0:
                 index_dvdt1_start = i
         # Calculate the slope of the phase space
+
         slope_array = (dVdt_2[index_dvdt1_start:index_dvdt1_max + 1] / dVdt_1[index_dvdt1_start:index_dvdt1_max + 1])
 
         index_Vth = np.argmax(slope_array) + index_dvdt1_start
@@ -322,21 +324,14 @@ class MethodBasedOnCurvature:
             The time corresponding to spike threshold
         """
         index_dvdt1_max = np.where(dVdt_1 == max(dVdt_1))[0][0]
-        # Find the start of the region where dV/dt>0 in the phase space
+        # Find the start of the region where d2V/dt2>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
-            if dVdt_1[i] <= 0:
+            if dVdt_2[i] <= 0:
                 index_dvdt1_start = i + 1
                 break
             if i == 0:
                 index_dvdt1_start = i
-        # Find the end of the region where dV/dt>0 in the phase space
-        for i in range(index_dvdt1_max, len(dVdt_1) - 1, 1):
-            if dVdt_1[i] <= 0:
-                index_dvdt1_end = i - 1
-                break
-            if i == len(dVdt_1) - 2:
-                index_dvdt1_end = i
-
+        index_dvdt1_end = index_dvdt1_max
         array = ((dVdt_1[index_dvdt1_start:index_dvdt1_end + 1] * dVdt_3[index_dvdt1_start:index_dvdt1_end + 1] -
                   dVdt_2[index_dvdt1_start:index_dvdt1_end + 1] ** 2) /
                  (dVdt_1[index_dvdt1_start:index_dvdt1_end + 1] ** 3))
@@ -457,7 +452,7 @@ class MethodBasedOnCurvature:
         timestamp_superposition_list = []
         timestamp_Vth_superposition_list = []
         for i in self.AP:
-            Vth = self.AP[i]['features']['Vth']
+            Vth = self.AP[i]['features']['Vth'][0]
             timestamp_Vth = self.AP[i]['timestamp']['timestamp_Vth']
             V_superposition = self.AP[i]['V_superposition']
             timestamp_superposition = self.AP[i]['timestamp_superposition']
@@ -547,7 +542,7 @@ def calculate_extracted_AP_ISI(AP, list_voltage_max_moment, ISI_all, data_source
         if timestamp_AP_voltage_max in list_voltage_max_moment:
             order = list_voltage_max_moment.index(timestamp_AP_voltage_max)
             ISI = ISI_all[order]
-            AP[i]['features']['ISI'] = ISI
+            AP[i]['features']['ISI'] = [ISI]
             AP_ISI.append(ISI)
         else:
             AP_ISI.append(np.NAN)

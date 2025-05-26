@@ -87,7 +87,7 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                     dVdt = self.dVdt_average(spike_moment=spike_moment, timestamp=timestamp, time_period=time_period,
                                              dVdt_1=dVdt_1)
                     dVdt_list.append(dVdt)
-                    self.data[i]['features']['dV/dt'] = dVdt
+                    self.data[i]['features']['dV/dt'] = [dVdt]
                     logging.info(f'{i} : {dVdt}')
 
             if self.option['dV/dt'][0] == 2:  # Slope of Vm within a time period
@@ -102,7 +102,7 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                     dVdt = self.dVdt_slope(spike_moment=spike_moment, timestamp=timestamp, time_period=time_period,
                                            voltage=voltage)
                     dVdt_list.append(dVdt)
-                    self.data[i]['features']['dV/dt'] = dVdt
+                    self.data[i]['features']['dV/dt'] = [dVdt]
                     logging.info(f'{i} : {dVdt}')
 
             if self.option['dV/dt'][0] == 3:  # Maximum of dVm/dt during upstroke
@@ -119,7 +119,7 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                     dVdt = self.dVdt_max(spike_moment=spike_moment, timestamp=timestamp,
                                          dVdt_1=dVdt_1, voltage=voltage)
                     dVdt_list.append(dVdt)
-                    self.data[i]['features']['dV/dt'] = dVdt
+                    self.data[i]['features']['dV/dt'] = [dVdt]
             self.data['All']['features']['dV/dt'] = dVdt_list
 
         # Calculate average membrane voltage <V>
@@ -138,7 +138,7 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                 average_V = self.average_V(spike_moment=spike_moment, time_period=time_period,
                                            timestamp=timestamp, voltage=voltage)
                 average_Vm_list.append(average_V)
-                self.data[i]['features']['<V>'] = average_V
+                self.data[i]['features']['<V>'] = [average_V]
             self.data['All']['features']['<V>'] = average_Vm_list
 
     def cancel_clicked(self):

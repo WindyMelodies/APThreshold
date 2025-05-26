@@ -480,22 +480,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 pass
             else:
                 item_Vth = QTableWidgetItem()
-                item_Vth.setText(str(round(data[i]['features']['Vth'], 3)))
+                item_Vth.setText(str(round(data[i]['features']['Vth'][0], 3)))
                 tableWidget_features.setItem(row, 0, item_Vth)
                 item_t_Vth = QTableWidgetItem()
-                item_t_Vth.setText(str(round(data[i]['timestamp']['timestamp_Vth'], 3)))
+                item_t_Vth.setText(str(round(data[i]['timestamp']['timestamp_Vth'][0], 3)))
                 tableWidget_features.setItem(row, 1, item_t_Vth)
                 if 'ISI' in data[i]['features']:
                     item_ISI = QTableWidgetItem()
-                    item_ISI.setText(str(round(data[i]['features']['ISI'], 3)))
+                    item_ISI.setText(str(round(data[i]['features']['ISI'][0], 3)))
                     tableWidget_features.setItem(row, 2, item_ISI)
                 if 'dV/dt' in data[i]['features']:
                     item_dVdt = QTableWidgetItem()
-                    item_dVdt.setText(str(round(data[i]['features']['dV/dt'], 3)))
+                    item_dVdt.setText(str(round(data[i]['features']['dV/dt'][0], 3)))
                     tableWidget_features.setItem(row, 3, item_dVdt)
                 if '<V>' in data[i]['features']:
                     item_average_V = QTableWidgetItem()
-                    item_average_V.setText(str(round(data[i]['features']['<V>'], 3)))
+                    item_average_V.setText(str(round(data[i]['features']['<V>'][0], 3)))
                     tableWidget_features.setItem(row, 4, item_average_V)
                 row += 1
         for i in data.keys():

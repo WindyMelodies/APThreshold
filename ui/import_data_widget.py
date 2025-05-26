@@ -117,6 +117,11 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
                         self.lineEdit_spik_count.setText(str(spike_count))
                         self.lineEdit_minimal_ISI.setText(str(min_ISI))
                         self.lineEdit_maximal_ISI.setText(str(max_ISI))
+                        # Calculate coefficient variation of ISIs.
+                        # mean = np.mean(ISI)
+                        # std = np.std(ISI)
+                        # cv_isi = std / mean
+
         else:
             msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Please import data！')
             msg_box.exec()

@@ -19,6 +19,7 @@ class Model:
     gna = 120
     gl = 0.3
     shift = 0  # Variable shift is to shift the V1/2(n) to different values, such as -51.41mV when shift is -2 mV
+    shift_for_h = 0
 
     @staticmethod
     def alpha_n(Vm):
@@ -30,7 +31,7 @@ class Model:
 
     @staticmethod
     def alpha_h(Vm):
-        return 0.07 * np.exp((-(Vm + 65) / 20))
+        return 0.07 * np.exp((-(Vm + 65 +Model.shift_for_h) / 20))
 
     @staticmethod
     def beta_n(Vm):
@@ -42,7 +43,7 @@ class Model:
 
     @staticmethod
     def beta_h(Vm):
-        return 1 / (np.exp(-(Vm + 35) / 10) + 1)
+        return 1 / (np.exp(-(Vm + 35 + Model.shift_for_h) / 10) + 1)
 
     @staticmethod
     def n_inf(Vm):
