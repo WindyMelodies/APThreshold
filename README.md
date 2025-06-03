@@ -50,7 +50,7 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
 
 ### Option 2: Running as a Standalone .exe File (Windows Only)
 1. Download the executable  
-    [APThreshold.zip](https://github.com/WindyMelodies/APThreshold/releases/download/v1.0.0/APThreshold.zip)(contains the standalone version of APThreshold)
+    [APThreshold.zip](https://github.com/WindyMelodies/APThreshold/releases/download/v1.1.0/APThreshold.zip)(contains the standalone version of APThreshold)
 2. Extract the .zip file  
 3. Run APThreshold  
     Click the 'APThreshold.exe' file.
