@@ -76,9 +76,9 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
             if self.option['dV/dt'][0] == 1:  # Average of dVm/dt over a time period
 
                 for i in name_list:
-                    spike_moment = self.data[i]['timestamp']['timestamp_Vth']
+                    spike_moment = self.data[i]['timestamp']['timestamp_Vth'][0]
 
-                    timestamp = self.data[i]['timestamp']['timestamp']
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
                     if self.data_source == 'simulation':
                         dVdt_1 = self.data[i]['derivative voltage'][
                             unicodeit.replace('d{}/dt'.format(self.voltage_option))]
@@ -93,8 +93,8 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
             if self.option['dV/dt'][0] == 2:  # Slope of Vm within a time period
 
                 for i in name_list:
-                    spike_moment = self.data[i]['timestamp']['timestamp_Vth']
-                    timestamp = self.data[i]['timestamp']['timestamp']
+                    spike_moment = self.data[i]['timestamp']['timestamp_Vth'][0]
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
                     if self.data_source == 'simulation':
                         voltage = self.data[i]['voltage']['{}'.format(self.voltage_option)]
                     else:
@@ -107,8 +107,8 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
 
             if self.option['dV/dt'][0] == 3:  # Maximum of dVm/dt during upstroke
                 for i in name_list:
-                    spike_moment = self.data[i]['timestamp']['timestamp_Vth']
-                    timestamp = self.data[i]['timestamp']['timestamp']
+                    spike_moment = self.data[i]['timestamp']['timestamp_Vth'][0]
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
                     if self.data_source == 'simulation':
                         dVdt_1 = self.data[i]['derivative voltage'][
                             unicodeit.replace('d{}/dt'.format(self.voltage_option))]
@@ -129,8 +129,8 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
         else:
             time_period = self.option['<Vm>']
             for i in name_list:
-                timestamp = self.data[i]['timestamp']['timestamp']
-                spike_moment = self.data[i]['timestamp']['timestamp_Vth']
+                timestamp = np.array(self.data[i]['timestamp']['timestamp'])
+                spike_moment = self.data[i]['timestamp']['timestamp_Vth'][0]
                 if self.data_source == 'simulation':
                     voltage = self.data[i]['voltage']['{}'.format(self.voltage_option)]
                 else:

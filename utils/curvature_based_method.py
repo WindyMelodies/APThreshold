@@ -285,10 +285,10 @@ class MethodBasedOnCurvature:
         timestamp_Vth：float
             The time corresponding to spike threshold
         """
-        index_dvdt1_max = list(dVdt_1).index(get_max_num(dVdt_1))
-        # Find the start of the region where d2V/dt2>0 in the phase space
+        index_dvdt1_max = np.argmin(np.abs(dVdt_1 - max(dVdt_1)))
+        # Find the start of the region where dV/dt>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
-            if dVdt_2[i] <= 0:
+            if dVdt_1[i] <= 0:
                 index_dvdt1_start = i + 1
                 break
             if i == 0:
@@ -323,10 +323,10 @@ class MethodBasedOnCurvature:
         timestamp_Vth：float
             The time corresponding to spike threshold
         """
-        index_dvdt1_max = np.where(dVdt_1 == max(dVdt_1))[0][0]
-        # Find the start of the region where d2V/dt2>0 in the phase space
+        index_dvdt1_max = np.argmin(np.abs(dVdt_1 - max(dVdt_1)))
+        # Find the start of the region where dV/dt>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
-            if dVdt_2[i] <= 0:
+            if dVdt_1[i] <= 0:
                 index_dvdt1_start = i + 1
                 break
             if i == 0:

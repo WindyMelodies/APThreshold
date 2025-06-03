@@ -221,7 +221,7 @@ def mark_threshold_range(order_1, figure_set, data, axes):
                 pass
             else:
                 if x_name_1 == y_name_1:
-                    Vth = data[x_name_1]['features']['Vth']
+                    Vth = data[x_name_1]['features']['Vth'][0]
                     Vth_list.append(Vth)
                     array = copy.deepcopy(data[y_name_1][y_name_2][y_name_3])
                     array_list = np.hstack((array_list, array))
