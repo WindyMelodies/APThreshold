@@ -255,6 +255,6 @@ class SetFigWindowVth(QWidget, Ui_setwidget_spike_threshold):
 
     def closeEvent(self, event: QCloseEvent) -> None:
         super().closeEvent(event)
-        if 'SetFigWindowVth' in self.main_window.names_window:
-            self.main_window.names_window.pop('SetFigWindowVth')
+        if 'SetFigWindow_Vth' in self.main_window.names_window:
+            self.main_window.names_window.pop('SetFigWindow_Vth')
         self.deleteLater()

@@ -20,15 +20,16 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QDo
     QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
     QLabel, QLayout, QLineEdit, QMainWindow,
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QSpinBox, QStatusBar, QTabWidget, QTableWidget,
-    QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
-import ui.apprcc_rc
+    QSpinBox, QStackedWidget, QStatusBar, QTabWidget,
+    QTableWidget, QTableWidgetItem, QToolBox, QVBoxLayout,
+    QWidget)
+import apprcc_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1266, 882)
+        MainWindow.resize(1266, 861)
         icon = QIcon()
         icon.addFile(u":/APThrehold_icon.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -126,7 +127,7 @@ class Ui_MainWindow(object):
 "")
         self.page_simulation = QWidget()
         self.page_simulation.setObjectName(u"page_simulation")
-        self.page_simulation.setGeometry(QRect(0, 0, 300, 747))
+        self.page_simulation.setGeometry(QRect(0, 0, 300, 726))
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
@@ -305,7 +306,7 @@ class Ui_MainWindow(object):
         self.toolBox_aquire_ap.addItem(self.page_simulation, u"Model simulation")
         self.page_experimental = QWidget()
         self.page_experimental.setObjectName(u"page_experimental")
-        self.page_experimental.setGeometry(QRect(0, 0, 300, 747))
+        self.page_experimental.setGeometry(QRect(0, 0, 100, 30))
         self.gridLayout_5 = QGridLayout(self.page_experimental)
         self.gridLayout_5.setSpacing(0)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
@@ -346,9 +347,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_ = QHBoxLayout(self.groupBox_extarct_aps)
         self.horizontalLayout_.setObjectName(u"horizontalLayout_")
         self.horizontalLayout_.setContentsMargins(4, 2, 4, 2)
-        self.verticalLayout_aps_pushbutton = QVBoxLayout()
-        self.verticalLayout_aps_pushbutton.setSpacing(0)
-        self.verticalLayout_aps_pushbutton.setObjectName(u"verticalLayout_aps_pushbutton")
+        self.gridLayout_aps_pushbutton = QGridLayout()
+        self.gridLayout_aps_pushbutton.setSpacing(0)
+        self.gridLayout_aps_pushbutton.setObjectName(u"gridLayout_aps_pushbutton")
         self.pushButton_add_ap = QPushButton(self.groupBox_extarct_aps)
         self.pushButton_add_ap.setObjectName(u"pushButton_add_ap")
         sizePolicy4.setHeightForWidth(self.pushButton_add_ap.sizePolicy().hasHeightForWidth())
@@ -359,7 +360,7 @@ class Ui_MainWindow(object):
         self.pushButton_add_ap.setFocusPolicy(Qt.NoFocus)
         self.pushButton_add_ap.setCheckable(False)
 
-        self.verticalLayout_aps_pushbutton.addWidget(self.pushButton_add_ap)
+        self.gridLayout_aps_pushbutton.addWidget(self.pushButton_add_ap, 0, 1, 1, 1)
 
         self.pushButton_subtract_ap = QPushButton(self.groupBox_extarct_aps)
         self.pushButton_subtract_ap.setObjectName(u"pushButton_subtract_ap")
@@ -372,10 +373,17 @@ class Ui_MainWindow(object):
         self.pushButton_subtract_ap.setChecked(False)
         self.pushButton_subtract_ap.setAutoExclusive(False)
 
-        self.verticalLayout_aps_pushbutton.addWidget(self.pushButton_subtract_ap)
+        self.gridLayout_aps_pushbutton.addWidget(self.pushButton_subtract_ap, 1, 1, 1, 1)
+
+        self.pushButton_auto_extrac_APs = QPushButton(self.groupBox_extarct_aps)
+        self.pushButton_auto_extrac_APs.setObjectName(u"pushButton_auto_extrac_APs")
+        self.pushButton_auto_extrac_APs.setMinimumSize(QSize(40, 50))
+        self.pushButton_auto_extrac_APs.setMaximumSize(QSize(40, 50))
+
+        self.gridLayout_aps_pushbutton.addWidget(self.pushButton_auto_extrac_APs, 0, 0, 2, 1)
 
 
-        self.horizontalLayout_.addLayout(self.verticalLayout_aps_pushbutton)
+        self.horizontalLayout_.addLayout(self.gridLayout_aps_pushbutton)
 
         self.scrollArea_extract_aps = QScrollArea(self.groupBox_extarct_aps)
         self.scrollArea_extract_aps.setObjectName(u"scrollArea_extract_aps")
@@ -391,7 +399,7 @@ class Ui_MainWindow(object):
         self.scrollArea_extract_aps.setWidgetResizable(True)
         self.scrollAreaWidgetContents_aps = QWidget()
         self.scrollAreaWidgetContents_aps.setObjectName(u"scrollAreaWidgetContents_aps")
-        self.scrollAreaWidgetContents_aps.setGeometry(QRect(0, 0, 739, 48))
+        self.scrollAreaWidgetContents_aps.setGeometry(QRect(0, 0, 699, 48))
         self.horizontalLayout_aps = QHBoxLayout(self.scrollAreaWidgetContents_aps)
         self.horizontalLayout_aps.setObjectName(u"horizontalLayout_aps")
         self.horizontalLayout_aps.setContentsMargins(0, 0, 0, 0)
@@ -505,7 +513,7 @@ class Ui_MainWindow(object):
 "    ")
         self.page_method_curvature = QWidget()
         self.page_method_curvature.setObjectName(u"page_method_curvature")
-        self.page_method_curvature.setGeometry(QRect(0, 0, 300, 747))
+        self.page_method_curvature.setGeometry(QRect(0, 0, 300, 231))
         sizePolicy11.setHeightForWidth(self.page_method_curvature.sizePolicy().hasHeightForWidth())
         self.page_method_curvature.setSizePolicy(sizePolicy11)
         self.page_method_curvature.setMinimumSize(QSize(300, 0))
@@ -583,8 +591,21 @@ class Ui_MainWindow(object):
         self.toolBox_calculate_spike_threshold.addItem(self.page_method_curvature, u"Waveform curvature-based method")
         self.page_method_ramp = QWidget()
         self.page_method_ramp.setObjectName(u"page_method_ramp")
-        self.page_method_ramp.setGeometry(QRect(0, 0, 300, 747))
+        self.page_method_ramp.setGeometry(QRect(0, 0, 100, 30))
         self.toolBox_calculate_spike_threshold.addItem(self.page_method_ramp, u"Ramp stimulation-based method")
+        self.page_threshold_equation = QWidget()
+        self.page_threshold_equation.setObjectName(u"page_threshold_equation")
+        self.page_threshold_equation.setGeometry(QRect(0, 0, 300, 695))
+        self.gridLayout_page_threshold_equation = QGridLayout(self.page_threshold_equation)
+        self.gridLayout_page_threshold_equation.setSpacing(0)
+        self.gridLayout_page_threshold_equation.setObjectName(u"gridLayout_page_threshold_equation")
+        self.gridLayout_page_threshold_equation.setContentsMargins(0, 0, 0, 0)
+        self.stackedWidget_threshold_equation_method = QStackedWidget(self.page_threshold_equation)
+        self.stackedWidget_threshold_equation_method.setObjectName(u"stackedWidget_threshold_equation_method")
+
+        self.gridLayout_page_threshold_equation.addWidget(self.stackedWidget_threshold_equation_method, 0, 0, 1, 1)
+
+        self.toolBox_calculate_spike_threshold.addItem(self.page_threshold_equation, u"Threshold equation-based method")
 
         self.gridLayout_11.addWidget(self.toolBox_calculate_spike_threshold, 0, 0, 1, 1)
 
@@ -729,7 +750,7 @@ class Ui_MainWindow(object):
         self.tabWidget_main.setCurrentIndex(0)
         self.toolBox_aquire_ap.setCurrentIndex(0)
         self.tabWidget_stimulus.setCurrentIndex(0)
-        self.toolBox_calculate_spike_threshold.setCurrentIndex(0)
+        self.toolBox_calculate_spike_threshold.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -737,7 +758,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"APThreshold", None))
-        self.actionSave_datas.setText(QCoreApplication.translate("MainWindow", u"Save data", None))
+        self.actionSave_datas.setText(QCoreApplication.translate("MainWindow", u"Save datas", None))
         self.actionode_option.setText(QCoreApplication.translate("MainWindow", u"ode_option", None))
         self.groupBox_neuron_model.setTitle(QCoreApplication.translate("MainWindow", u"Biophysical model", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Name</p></body></html>", None))
@@ -774,6 +795,7 @@ class Ui_MainWindow(object):
         self.pushButton_subtract_ap.setWhatsThis(QCoreApplication.translate("MainWindow", u"\u6dfb\u52a0\u523a\u6fc0\u7535\u6d41", None))
 #endif // QT_CONFIG(whatsthis)
         self.pushButton_subtract_ap.setText(QCoreApplication.translate("MainWindow", u"-", None))
+        self.pushButton_auto_extrac_APs.setText(QCoreApplication.translate("MainWindow", u"Auto", None))
         self.groupBox_set_axes_AP.setTitle(QCoreApplication.translate("MainWindow", u"Set axes", None))
         self.pushButton_setplot_AP.setText("")
         self.GroupBox_export_results_2.setTitle(QCoreApplication.translate("MainWindow", u"Save data", None))
@@ -808,6 +830,7 @@ class Ui_MainWindow(object):
         self.pushButton_set_parameters_features.setText(QCoreApplication.translate("MainWindow", u"Set parameters", None))
         self.toolBox_calculate_spike_threshold.setItemText(self.toolBox_calculate_spike_threshold.indexOf(self.page_method_curvature), QCoreApplication.translate("MainWindow", u"Waveform curvature-based method", None))
         self.toolBox_calculate_spike_threshold.setItemText(self.toolBox_calculate_spike_threshold.indexOf(self.page_method_ramp), QCoreApplication.translate("MainWindow", u"Ramp stimulation-based method", None))
+        self.toolBox_calculate_spike_threshold.setItemText(self.toolBox_calculate_spike_threshold.indexOf(self.page_threshold_equation), QCoreApplication.translate("MainWindow", u"Threshold equation-based method", None))
         self.groupBox_set_axes_Vth.setTitle(QCoreApplication.translate("MainWindow", u"Set axes", None))
         self.pushButton_setplot_Vth.setText("")
         self.GroupBox_export_results.setTitle(QCoreApplication.translate("MainWindow", u"Save data", None))

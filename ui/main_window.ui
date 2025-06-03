@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1266</width>
-    <height>882</height>
+    <height>861</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -158,7 +158,7 @@ QToolBox::tab {
              <x>0</x>
              <y>0</y>
              <width>300</width>
-             <height>747</height>
+             <height>726</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -453,8 +453,8 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
-             <height>747</height>
+             <width>100</width>
+             <height>30</height>
             </rect>
            </property>
            <attribute name="label">
@@ -558,11 +558,11 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                  <number>2</number>
                 </property>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_aps_pushbutton">
+                 <layout class="QGridLayout" name="gridLayout_aps_pushbutton">
                   <property name="spacing">
                    <number>0</number>
                   </property>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="pushButton_add_ap">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -599,7 +599,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="1" column="1">
                    <widget class="QPushButton" name="pushButton_subtract_ap">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -639,6 +639,25 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                     </property>
                    </widget>
                   </item>
+                  <item row="0" column="0" rowspan="2">
+                   <widget class="QPushButton" name="pushButton_auto_extrac_APs">
+                    <property name="minimumSize">
+                     <size>
+                      <width>40</width>
+                      <height>50</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>40</width>
+                      <height>50</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Auto</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </item>
                 <item>
@@ -672,7 +691,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>739</width>
+                     <width>699</width>
                      <height>48</height>
                     </rect>
                    </property>
@@ -911,7 +930,7 @@ QToolBox::tab {
     </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_method_curvature">
            <property name="geometry">
@@ -919,7 +938,7 @@ QToolBox::tab {
              <x>0</x>
              <y>0</y>
              <width>300</width>
-             <height>747</height>
+             <height>231</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -1109,13 +1128,46 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
-             <height>747</height>
+             <width>100</width>
+             <height>30</height>
             </rect>
            </property>
            <attribute name="label">
             <string>Ramp stimulation-based method</string>
            </attribute>
+          </widget>
+          <widget class="QWidget" name="page_threshold_equation">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>300</width>
+             <height>695</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Threshold equation-based method</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_page_threshold_equation">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_threshold_equation_method"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>

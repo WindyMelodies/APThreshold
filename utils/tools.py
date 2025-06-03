@@ -7,8 +7,10 @@ import pickle
 import re
 import h5py
 import scipy
-from PySide6.QtWidgets import QFileDialog
+import unicodeit
+from PySide6.QtWidgets import QFileDialog, QMessageBox
 import numpy as np
+from scipy.signal import find_peaks
 
 
 def add_item_to_combox(name_list, combobox):
@@ -125,6 +127,15 @@ def get_voltage_from_data(data, data_source, voltage_option=None):
     return voltage
 
 
+def get_derivative_voltage_from_data(data, data_source, voltage_option=None):
+    if data_source == 'simulation':
+        dVdt_1 = data['derivative voltage'][unicodeit.replace(
+            'd{}/dt'.format(voltage_option))]
+    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat':
+        dVdt_1 = data['voltage'][unicodeit.replace('dV/dt')]
+    return dVdt_1
+
+
 def get_timestamp_from_data(data):
     timestamp = data['timestamp']['timestamp']
     return timestamp
@@ -229,3 +240,80 @@ def open_save_data_window(data):
             save_to_json(file_path, data)
     else:
         logging.info("No file is selected.")
+
+
+def identify_single_aps(index_peaks, voltage, dVdt1, timestamp):
+    ap_start_stop_index = []
+    if len(index_peaks) == 0:
+        msg_box = QMessageBox(QMessageBox.Information, 'Message', 'No spike data!')
+        msg_box.exec()
+        return ap_start_stop_index
+
+    spike_timing = timestamp[index_peaks]
+    for i in range(len(index_peaks)):
+        spike_num = i
+        # identify AP onset
+        if spike_num == 0:
+            dV_before_peak = dVdt1[timestamp <= spike_timing[spike_num]]
+            left_ind_front = 0
+        else:
+            dV_before_peak = dVdt1[
+                (timestamp <= spike_timing[spike_num]) & (timestamp >= spike_timing[spike_num - 1])]
+            left_ind_front = np.argmax(timestamp >= spike_timing[spike_num - 1])
+        min_dv = np.min(dV_before_peak[2:])
+        max_dv_ind = np.argmax(dV_before_peak[1:]) + 1
+        dV_before_peak = dV_before_peak[1:max_dv_ind]
+        # 寻找 dv 最后上升到dv最小值的一半时的索引
+        list_temp = np.where(dV_before_peak <= min_dv * 0.5)[0]
+        if len(list_temp):
+            left_ind_1 = list_temp[-1]
+        else:
+            left_ind_1 = 0
+        left_ind_2 = np.where(dV_before_peak[left_ind_1:] > 0)[0][0]
+        start_index = left_ind_front + left_ind_1 + left_ind_2
+        # identify AP offset
+        if spike_num == len(index_peaks) - 1:
+            index_after_peak = timestamp >= timestamp[index_peaks[spike_num]]
+        else:
+            index_after_peak = (timestamp >= timestamp[index_peaks[spike_num]]) & (
+                    timestamp <= timestamp[index_peaks[spike_num + 1]])
+        dv_after_peak = dVdt1[index_after_peak]
+        v_after_peak = voltage[index_after_peak]
+        timestamp_after_peak = timestamp[index_after_peak]
+        index = np.array([])
+        i_loop = 0
+        max_loop = 10
+        reverse_v_after_peak = -v_after_peak
+        peak_prominence = 1
+        while index.size == 0:
+            index = find_peaks(x=reverse_v_after_peak, prominence=peak_prominence)[0]
+            i_loop += 1
+            peak_prominence = peak_prominence / 10
+            if i_loop >= max_loop:
+                break
+        if i_loop >= max_loop:
+            max_dv = max(dv_after_peak)
+            min_dv_index = np.argmin(dv_after_peak)
+            dv_after_peak = dv_after_peak[min_dv_index:]
+            right_index_1 = np.where(dv_after_peak >= max_dv * 0.3)[0]
+            if right_index_1.size == 0:
+                right_index_1 = len(dv_after_peak) - 1
+            else:
+                right_index_1 = right_index_1[0]
+            # right_index_2 = np.where(dv_after_peak[0:right_index_1] <= 0)[0][0]
+            right_index_2 = 0
+            right_index = min_dv_index + right_index_2
+        else:
+            right_index = index[0]
+        stop_index = np.where(timestamp >= timestamp[index_peaks[spike_num]])[0][0] + right_index
+        ap_start_stop_index.append((start_index, stop_index))
+        # print("self.AP_start_stop_index_list", self.AP_start_stop_index_list)
+        # stop_index = round( stop_index + (stop_index - left_ind) * 0.05, 0);
+    return ap_start_stop_index
+
+
+def detect_spike(voltage):
+    index_peaks, _ = find_peaks(voltage, height=0, prominence=10, distance=10,
+                                width=None)
+    print("get_index_peaks：当前膜电压序列中存在放电{}次。".format(len(index_peaks)))
+    return index_peaks

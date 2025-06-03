@@ -207,7 +207,7 @@ class RampMethodWindow(QWidget, Ui_RampMethodWindow):
             if i == 'All':
                 pass
             else:
-                Vth_list.append(self.data[i]['features']['Vth'])
+                Vth_list.append(self.data[i]['features']['Vth'][0])
                 time_vth_list.append(self.data[i]['timestamp']['timestamp_Vth'])
         logging.info(f"Spike threshold:{Vth_list}")
 
@@ -219,7 +219,7 @@ class RampMethodWindow(QWidget, Ui_RampMethodWindow):
             if i == 'All':
                 pass
             else:
-                dv_dt = self.data[i]['features']['dV/dt']
+                dv_dt = self.data[i]['features']['dV/dt'][0]
 
                 dv_dt_list.append(dv_dt)
         self.data['All']['features']['dV/dt'] = dv_dt_list
@@ -368,7 +368,7 @@ def output_of_one_k(time, timeline, model_name, ode_option, k, dt, ode_dt, stimu
         except:
             pass
 
-    subdata_timeline = {'timestamp': t, 'timestamp_Vth': time}
+    subdata_timeline = {'timestamp': t, 'timestamp_Vth': [time]}
 
     subdata_state = {}
     for i in dynamic_variables_values:
@@ -414,7 +414,7 @@ def output_of_one_k(time, timeline, model_name, ode_option, k, dt, ode_dt, stimu
         for i in range(len(stimulus_name)):
             values[stimulus_name[i]] = Istim[i]
         data['Istim'] = values
-    data['features'] = {'Vth': Vth, 'dV/dt': dv_dt, '<V>': average_voltage}
+    data['features'] = {'Vth': [Vth], 'dV/dt': [dv_dt], '<V>': [average_voltage]}
     return data
 
 

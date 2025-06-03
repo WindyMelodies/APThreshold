@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QPushButton,
     QRadioButton, QScrollArea, QSizePolicy, QToolBox,
     QWidget)
-import ui.apprcc_rc
+import apprcc_rc
 
 class Ui_setwidget_spike_threshold(object):
     def setupUi(self, setwidget_spike_threshold):

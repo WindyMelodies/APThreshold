@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>workflow_1_panel</class>
+ <widget class="QWidget" name="workflow_1_panel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>279</width>
+    <height>597</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Workflow 1</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>3</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_back_to_home_workflow_1">
+     <property name="text">
+      <string>Back to Home</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="pushButton_reset_workflow_1">
+     <property name="text">
+      <string>Reset</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_threshold_euqation_workflow_1">
+     <property name="title">
+      <string>Vth prediction</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_threshold_equation_workflow_1">
+      <item row="2" column="0" colspan="2">
+       <widget class="QPushButton" name="pushButton_config_threshold_params_workflow_1">
+        <property name="text">
+         <string>Configure equation parameters</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBox_threshold_equation_option_workflow_1"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_threshold_equation_option_workflow_1">
+        <property name="text">
+         <string>Threshold equation</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QTextEdit" name="textEdit_threshold_equation_workflow_1">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QPushButton" name="pushButton_run_workflow_1">
+        <property name="text">
+         <string>Run</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="Feature_calculation_workflow_1">
+     <property name="title">
+      <string>Feature calculation</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_Feature_calculation_workflow_1">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QTableWidget" name="tableWidget_features_workflow_1"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_set_parameters_workflow_1">
+        <property name="text">
+         <string>Set parameters</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/apprcc.qrc">
+          <normaloff>:/set1.png</normaloff>:/set1.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../resources/apprcc.qrc"/>
+ </resources>
+ <connections/>
+</ui>

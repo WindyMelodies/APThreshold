@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QPushButton,
     QScrollArea, QSizePolicy, QToolBox, QWidget)
-import ui.apprcc_rc
+import apprcc_rc
 
 class Ui_setwidget_get_aps(object):
     def setupUi(self, setwidget_get_aps):

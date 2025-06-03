@@ -5,14 +5,18 @@ other modules and manages all the interface components, child windows, and plott
 import matplotlib.pyplot as plt
 from PySide6.QtCore import QRect
 from PySide6.QtWidgets import QWidget, QMainWindow, QGridLayout, QLabel, QSpinBox, QComboBox, \
-    QDoubleSpinBox, QPushButton, QMessageBox, QTableWidgetItem, QAbstractItemView, QTabWidget, QHeaderView
+    QDoubleSpinBox, QPushButton, QMessageBox, QTableWidgetItem, QAbstractItemView, QTabWidget, QHeaderView, \
+    QStackedWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from utils.condition_check import data_source_check, spike_check, data_exists_check
 from .calculate_feature_window import CalculateFeatureWindow
 from ui import ExtractAPWindow
 from .import_data_widget import ImportDataWidget
 from .ramp_based_method_window import RampMethodWindow
 from .set_fig_window_AP import SetFigWindowAP
 from .set_fig_window_Vth import SetFigWindowVth
+from .threshold_equation_method_window import ThresholdEquationMethodMainWindow, \
+    ThresholdEquationMethodWorkflowOneWindow
 from .ui_main_window import Ui_MainWindow
 from utils.custom_navigation_toolbar import CustomNavigationToolbar as NavigationToolbar
 from utils.curvature_based_method import MethodBasedOnCurvature
@@ -25,6 +29,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
+        self.threshold_equation_workflow_2_panel = None
+        self.threshold_equation_workflow_1_panel = None
+        self.layout_panel_threshold_equation_stacked_widget = None
+        self.layout_page_threshold_equation = None
+        self.threshold_equation_main_window = None
         self.features_option = {'<Vm>': 0, 'dV/dt': [None, 0]}
         self.pos_APWindow = None
         self.rampMethod_window = None
@@ -45,13 +54,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.names_fig = {}  # Store all figure
         self.AP = {}
 
-        self.names_AP = {} # AP: action potential
+        self.names_AP = {}  # AP: action potential
         self.names_AP_window = {}
         self.init_ui()
         self.setup_signal_slot()
         self.setObjectName('Mywindow')
         self.setGeometry(QRect(400, 300, 900, 600))
-
 
     def init_ui(self):
         self.setStyleSheet("""QWidget#Mywindow {background-color: #E4F4FE}""")
@@ -63,6 +71,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setWindowTitle("APThreshold".center(50))
         self.page_ramp_method_init()
         self.page_canvas_init()
+        self.page_threshold_equation_method_init()
         self.page_stimulus_init()
         self.widget_physiological_data_init()
         self.doubleSpinBox_kth_curvature.setMaximum(10000000)
@@ -102,7 +111,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         option = self.comboBox_method_curvature.currentIndex()
         kth = self.doubleSpinBox_kth_curvature.value()
         voltage_option = self.comboBox_voltage_option.currentText()
-        logging.info('Estimating spike threshold of extracted APs using the waveform curvature-based method\nk_th={}'.format(kth))
+        logging.info(
+            'Estimating spike threshold of extracted APs using the waveform curvature-based method\nk_th={}'.format(
+                kth))
         logging.info('voltage_option:{}'.format(voltage_option))
         self.CurvatureSpikeThreshold = MethodBasedOnCurvature(main_window=self, option=option, k_th=kth,
                                                               voltage_option=voltage_option)
@@ -119,7 +130,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                figure_set=self.CurvatureSpikeThreshold.figure_set,
                                                axes=self.names['axes_Vth'])
             self.names['Canvas_Vth'].draw()
-            # 5. Update SetFigWindow_AP for new data information
+            # 5. Update SetFigWindow_Vth for new data visualization
             if 'SetFigWindow_Vth' in self.names_window:
                 self.names_window['SetFigWindow_Vth'].close()
 
@@ -148,6 +159,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.widget_physiological_data = ImportDataWidget(self)
         self.gridLayout_physiological_datas.addWidget(self.widget_physiological_data)
 
+    def page_threshold_equation_method_init(self):
+        self.threshold_equation_main_window = ThresholdEquationMethodMainWindow()
+        self.threshold_equation_workflow_1_panel = ThresholdEquationMethodWorkflowOneWindow()
+        self.threshold_equation_workflow_2_panel = None
+        self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_main_window)
+        self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_workflow_1_panel)
+        self.threshold_equation_main_window.pushButton_workflow_1.clicked.connect(
+            lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(1))
+        self.threshold_equation_workflow_1_panel.pushButton_back_to_home_workflow_1.clicked.connect(
+            lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(0))
+
     def page_ramp_method_init(self):
         """Initiate widget objective for quantify spike threshold using ramp stimulation-based method"""
         self.layout_page_ramp = QGridLayout(self.page_method_ramp)
@@ -161,6 +183,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushButton_simulation_run.clicked.connect(self.simulation_run)
         self.pushButton_setplot_AP.clicked.connect(
             self.set_plot_simulation)
+        self.pushButton_auto_extrac_APs.clicked.connect(self.auto_detect_aps)
         self.pushButton_add_ap.clicked.connect(self.slot_auto_add_ap_pushbutton)
         self.pushButton_subtract_ap.toggled.connect(self.slot_subtract_aps_button_isChecked)
         self.pushButton_run_curvature.clicked.connect(self.slot_curvature_run)
@@ -275,6 +298,41 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.names_AP[i].clicked.disconnect(self.slot_delete_pushbutton)
                 self.names_AP[i].clicked.connect(self.slot_show_ExtractAPWindow)
 
+    def auto_detect_aps(self):
+        """自动提取单个动作电位"""
+        # 1. 检查是否存在膜电压数据，以及界面位置位于Model simulation还是Experimental recording
+        if data_exists_check(main_window=self):
+
+            data_source, voltage_option, data, dt = data_source_check(
+                self)
+            logging.info(f'data_source: {data_source}')
+            logging.info(f'voltage_option: {voltage_option}')
+            voltage = np.array(get_voltage_from_data(data=data, data_source=data_source,
+                                                     voltage_option=voltage_option))
+            timestamp = get_timestamp_from_data(data=data)
+            index_peaks = detect_spike(voltage)
+            dVdt1 = get_derivative_voltage_from_data(data=data, data_source=data_source, voltage_option=voltage_option)
+            ap_start_stop_index = identify_single_aps(index_peaks=index_peaks, voltage=voltage, dVdt1=dVdt1,
+                                                      timestamp=timestamp)
+            for i in range(len(ap_start_stop_index)):
+                widgets = self.scrollAreaWidgetContents_aps.findChildren(QPushButton)
+                if len(widgets) == 0:
+                    num = '1'
+                else:
+                    num = str(int(widgets[len(widgets) - 1].objectName().strip('AP')) + 1)
+                name = 'AP' + num
+                self.names_AP[name] = QPushButton(self.scrollAreaWidgetContents_aps)
+                self.names_AP[name].setText(name)
+                self.names_AP[name].setObjectName(name)
+                self.names_AP[name].clicked.connect(self.slot_show_ExtractAPWindow)
+                self.horizontalLayout_aps.addWidget(self.names_AP[name])
+                self.AP[name] = {'start': timestamp[ap_start_stop_index[i][0]],
+                                 'stop': timestamp[ap_start_stop_index[i][1]]}
+
+        else:
+            msg_box = QMessageBox(QMessageBox.Information, 'Message', 'No spike data!')
+            msg_box.exec()
+
     def slot_delete_pushbutton(self):
         sender = self.sender()
         name = sender.objectName()
@@ -380,7 +438,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                                5, 2, 1, 1)
 
             self.names['comboBox_' + tab_name].currentIndexChanged.connect(self.slot_auto_add_widget)
-
 
     def delete_stim_tab(self, index):
         self.tabWidget_stimulus.widget(index).deleteLater()
