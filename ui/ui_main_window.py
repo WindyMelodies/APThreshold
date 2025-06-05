@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
 "	/*font-family:Times New Roman ;*/\n"
 "	font-weight: bold;\n"
 "	/*font-size:15px;*/\n"
-"    min-width: 145px;\n"
+"    min-width: 165px;\n"
 "    margin-right: 5px;\n"
 "    padding-left: 5px;\n"
 "    padding-right: 5px;\n"
@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.toolBox_aquire_ap.sizePolicy().hasHeightForWidth())
         self.toolBox_aquire_ap.setSizePolicy(sizePolicy1)
-        self.toolBox_aquire_ap.setMinimumSize(QSize(300, 0))
+        self.toolBox_aquire_ap.setMinimumSize(QSize(340, 0))
         self.toolBox_aquire_ap.setStyleSheet(u"QToolBoxButton {min-height: 25px;}\n"
 "QToolBox::tab {\n"
 "    background-color: #414656;  /* Tab background color */\n"
@@ -127,7 +127,7 @@ class Ui_MainWindow(object):
 "")
         self.page_simulation = QWidget()
         self.page_simulation.setObjectName(u"page_simulation")
-        self.page_simulation.setGeometry(QRect(0, 0, 300, 726))
+        self.page_simulation.setGeometry(QRect(0, 0, 340, 726))
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
@@ -399,7 +399,7 @@ class Ui_MainWindow(object):
         self.scrollArea_extract_aps.setWidgetResizable(True)
         self.scrollAreaWidgetContents_aps = QWidget()
         self.scrollAreaWidgetContents_aps.setObjectName(u"scrollAreaWidgetContents_aps")
-        self.scrollAreaWidgetContents_aps.setGeometry(QRect(0, 0, 699, 48))
+        self.scrollAreaWidgetContents_aps.setGeometry(QRect(0, 0, 659, 48))
         self.horizontalLayout_aps = QHBoxLayout(self.scrollAreaWidgetContents_aps)
         self.horizontalLayout_aps.setObjectName(u"horizontalLayout_aps")
         self.horizontalLayout_aps.setContentsMargins(0, 0, 0, 0)
@@ -500,7 +500,7 @@ class Ui_MainWindow(object):
         sizePolicy11.setVerticalStretch(0)
         sizePolicy11.setHeightForWidth(self.toolBox_calculate_spike_threshold.sizePolicy().hasHeightForWidth())
         self.toolBox_calculate_spike_threshold.setSizePolicy(sizePolicy11)
-        self.toolBox_calculate_spike_threshold.setMinimumSize(QSize(300, 0))
+        self.toolBox_calculate_spike_threshold.setMinimumSize(QSize(340, 0))
         self.toolBox_calculate_spike_threshold.setMaximumSize(QSize(300, 16777215))
         self.toolBox_calculate_spike_threshold.setStyleSheet(u"QToolBoxButton {min-height: 25px;}\n"
 "QToolBox::tab {\n"
@@ -513,7 +513,7 @@ class Ui_MainWindow(object):
 "    ")
         self.page_method_curvature = QWidget()
         self.page_method_curvature.setObjectName(u"page_method_curvature")
-        self.page_method_curvature.setGeometry(QRect(0, 0, 300, 231))
+        self.page_method_curvature.setGeometry(QRect(0, 0, 340, 695))
         sizePolicy11.setHeightForWidth(self.page_method_curvature.sizePolicy().hasHeightForWidth())
         self.page_method_curvature.setSizePolicy(sizePolicy11)
         self.page_method_curvature.setMinimumSize(QSize(300, 0))
@@ -595,7 +595,7 @@ class Ui_MainWindow(object):
         self.toolBox_calculate_spike_threshold.addItem(self.page_method_ramp, u"Ramp stimulation-based method")
         self.page_threshold_equation = QWidget()
         self.page_threshold_equation.setObjectName(u"page_threshold_equation")
-        self.page_threshold_equation.setGeometry(QRect(0, 0, 300, 695))
+        self.page_threshold_equation.setGeometry(QRect(0, 0, 340, 695))
         self.gridLayout_page_threshold_equation = QGridLayout(self.page_threshold_equation)
         self.gridLayout_page_threshold_equation.setSpacing(0)
         self.gridLayout_page_threshold_equation.setObjectName(u"gridLayout_page_threshold_equation")
@@ -747,7 +747,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget_main.setCurrentIndex(0)
+        self.tabWidget_main.setCurrentIndex(1)
         self.toolBox_aquire_ap.setCurrentIndex(0)
         self.tabWidget_stimulus.setCurrentIndex(0)
         self.toolBox_calculate_spike_threshold.setCurrentIndex(2)
@@ -837,9 +837,9 @@ class Ui_MainWindow(object):
         self.pushButton_save_data_Vth.setText("")
         self.groupBox_Vth.setTitle(QCoreApplication.translate("MainWindow", u"Vth info", None))
         self.label_SD_Vth.setText(QCoreApplication.translate("MainWindow", u"s.t.d", None))
-        self.label_minimum_Vth.setText(QCoreApplication.translate("MainWindow", u"Minimum", None))
+        self.label_minimum_Vth.setText(QCoreApplication.translate("MainWindow", u"Min", None))
         self.label_mean_Vth.setText(QCoreApplication.translate("MainWindow", u"Mean", None))
-        self.label_maximum_Vth.setText(QCoreApplication.translate("MainWindow", u"Maximum", None))
+        self.label_maximum_Vth.setText(QCoreApplication.translate("MainWindow", u"Max", None))
         self.tabWidget_main.setTabText(self.tabWidget_main.indexOf(self.tab_Vth), QCoreApplication.translate("MainWindow", u"Spike Threshold", None))
     # retranslateUi
 

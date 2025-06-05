@@ -56,7 +56,7 @@ QTabBar::tab {
 	/*font-family:Times New Roman ;*/
 	font-weight: bold;
 	/*font-size:15px;*/
-    min-width: 145px;
+    min-width: 165px;
     margin-right: 5px;
     padding-left: 5px;
     padding-right: 5px;
@@ -98,7 +98,7 @@ QGroupBox::title {
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="usesScrollButtons">
        <bool>false</bool>
@@ -133,7 +133,7 @@ QGroupBox::title {
           </property>
           <property name="minimumSize">
            <size>
-            <width>300</width>
+            <width>340</width>
             <height>0</height>
            </size>
           </property>
@@ -157,7 +157,7 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
+             <width>340</width>
              <height>726</height>
             </rect>
            </property>
@@ -691,7 +691,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>699</width>
+                     <width>659</width>
                      <height>48</height>
                     </rect>
                    </property>
@@ -908,7 +908,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
           </property>
           <property name="minimumSize">
            <size>
-            <width>300</width>
+            <width>340</width>
             <height>0</height>
            </size>
           </property>
@@ -937,8 +937,8 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
-             <height>231</height>
+             <width>340</width>
+             <height>695</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -1141,7 +1141,7 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
+             <width>340</width>
              <height>695</height>
             </rect>
            </property>
@@ -1399,7 +1399,7 @@ QToolBox::tab {
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_minimum_Vth">
                   <property name="text">
-                   <string>Minimum</string>
+                   <string>Min</string>
                   </property>
                  </widget>
                 </item>
@@ -1427,7 +1427,7 @@ QToolBox::tab {
                 <item row="0" column="2">
                  <widget class="QLabel" name="label_maximum_Vth">
                   <property name="text">
-                   <string>Maximum</string>
+                   <string>Max</string>
                   </property>
                  </widget>
                 </item>

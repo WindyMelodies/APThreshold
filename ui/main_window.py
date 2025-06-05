@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from PySide6.QtCore import QRect
 from PySide6.QtWidgets import QWidget, QMainWindow, QGridLayout, QLabel, QSpinBox, QComboBox, \
     QDoubleSpinBox, QPushButton, QMessageBox, QTableWidgetItem, QAbstractItemView, QTabWidget, QHeaderView, \
-    QStackedWidget
+    QStackedWidget, QApplication
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from utils.condition_check import data_source_check, spike_check, data_exists_check
 from .calculate_feature_window import CalculateFeatureWindow
@@ -59,7 +59,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.init_ui()
         self.setup_signal_slot()
         self.setObjectName('Mywindow')
-        self.setGeometry(QRect(400, 300, 900, 600))
+        screen = QApplication.primaryScreen()
+        screen_geometry = screen.availableGeometry()
+        width = 1000
+        height = 700
+        x = (screen_geometry.width() - width) // 2
+        y = (screen_geometry.height() - height) // 2
+        self.setGeometry(QRect(x, y, width, height))
 
     def init_ui(self):
         self.setStyleSheet("""QWidget#Mywindow {background-color: #E4F4FE}""")
@@ -161,7 +167,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def page_threshold_equation_method_init(self):
         self.threshold_equation_main_window = ThresholdEquationMethodMainWindow()
-        self.threshold_equation_workflow_1_panel = ThresholdEquationMethodWorkflowOneWindow()
+        self.threshold_equation_workflow_1_panel = ThresholdEquationMethodWorkflowOneWindow(main_window=self)
         self.threshold_equation_workflow_2_panel = None
         self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_main_window)
         self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_workflow_1_panel)
@@ -314,6 +320,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             dVdt1 = get_derivative_voltage_from_data(data=data, data_source=data_source, voltage_option=voltage_option)
             ap_start_stop_index = identify_single_aps(index_peaks=index_peaks, voltage=voltage, dVdt1=dVdt1,
                                                       timestamp=timestamp)
+            if self.names_AP:
+                for name in self.names_AP:
+                    self.names_AP[name].deleteLater()
+                self.AP = {}
             for i in range(len(ap_start_stop_index)):
                 widgets = self.scrollAreaWidgetContents_aps.findChildren(QPushButton)
                 if len(widgets) == 0:

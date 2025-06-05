@@ -11,7 +11,7 @@ from ui.main_window import MainWindow
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.ERROR)
+    logging.basicConfig(level=logging.INFO)
 
     # Configure matplotlib plot parameters
     plt.rcParams['font.size'] = 10

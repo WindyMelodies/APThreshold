@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>refresh.png</file>
+    <file>homepage.png</file>
     <file>8678769_save_fill_data_icon.png</file>
     <file>APThrehold_icon.png</file>
     <file>sheet300.png</file>
