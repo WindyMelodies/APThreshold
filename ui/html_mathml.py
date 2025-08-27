@@ -127,7 +127,12 @@ html_mathml_1 = """<html>
 
             </body>
             </html>"""
-
+"""<mn>(</mn>
+                        <msub>
+                        <mi>V</mi>
+                        <mn>m</mn>
+                        </msub>
+                        <mn>)</mn>"""
 html_mathml_2 = """<html>
                         <head><meta charset="UTF-8">
                         <style>
@@ -156,12 +161,7 @@ html_mathml_2 = """<html>
                         <mi>&tau;</mi>
                         <mi>&theta;</mi>
                         </msub>
-                        <mn>(</mn>
-                        <msub>
-                        <mi>V</mi>
-                        <mn>m</mn>
-                        </msub>
-                        <mn>)</mn>
+                        
                         <mfrac>
                         <mstyle mathsize="14px">
                         <mrow><mn>d</mn><mi>&theta;</mi></mrow>
@@ -248,7 +248,12 @@ html_mathml_2 = """<html>
 
                         </body>
                         </html>"""
-
+"""<mn>(</mn>
+            <msub>
+            <mi>V</mi>
+            <mn>m</mn>
+            </msub>
+            <mn>)</mn>"""
 html_mathml_3 = """<html>
             <head><meta charset="UTF-8">
             <style>
@@ -276,12 +281,9 @@ html_mathml_3 = """<html>
             <mi>&tau;</mi>
             <mi>&theta;</mi>
             </msub>
-            <mn>(</mn>
-            <msub>
-            <mi>V</mi>
-            <mn>m</mn>
-            </msub>
-            <mn>)</mn>
+            
+            
+            
             <mfrac>
             <mstyle mathsize="14px">
             <mrow><mn>d</mn><mi>&theta;</mi></mrow>

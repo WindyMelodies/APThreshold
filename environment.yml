@@ -1,16 +1,15 @@
 name: APThreshold
 channels:
   - defaults
-  - conda-forge
 dependencies:
-  - python=3.10
+  - python=3.11  # Python 3.13 不建议用在生产环境，兼容性差
   - numpy
-  - scipy
-  - pyside6=6.6.0
   - scikit-learn
   - h5py
-  - matplotlib
   - pip
   - pip:
       - unicodeit
-
+      - scipy
+      - cma
+      - pyside6  # 最新版，包含 QtWebEngin
+      - matplotlib

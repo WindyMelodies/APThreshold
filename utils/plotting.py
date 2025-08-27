@@ -5,6 +5,7 @@ import numpy as np
 from PySide6.QtWidgets import QMessageBox
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LinearRegression
+from utils.tools import remove_nan_pairs
 
 
 class Plotting:
@@ -15,6 +16,7 @@ class Plotting:
     3. Fill-between: threshold region display.
     4. Linear fitting.
     """
+    Vth_name = ['Vth', 'Vth_est', 'Vth_pred']
 
     def __init__(self, data, figure_set, axes):
         """
@@ -43,7 +45,7 @@ class Plotting:
         self.clear_axes(axes=axes)
 
         # 3、Plot portraits
-        Vth_name = ['Vth']
+
         superposition_name = ['V_superposition', 'timestamp_superposition']
         for order_1 in axes.keys():
             flag_mark_threshold_range = 0
@@ -56,21 +58,21 @@ class Plotting:
                     # Display threshold range
                     flag_mark_threshold_range = 1
                 else:
-                    x, y, label, x_name, y_name = get_x_y_data(data=data, figure_set=figure_set, order_1=order_1,
-                                                               order_2=order_2)
+                    x, y, label, color, x_name, y_name = get_x_y_data(data=data, figure_set=figure_set, order_1=order_1,
+                                                                      order_2=order_2)
                     # Mark threshold points
-                    if x_name in Vth_name or y_name in Vth_name:
-                        self.axes_scatter(axes=axes[order_1], x=x, y=y, label=label)
+                    if x_name in self.Vth_name or y_name in self.Vth_name:
+                        self.axes_scatter(axes=axes[order_1], x=x, y=y, label=label, color=color)
                         if 'Linear_fitting' in figure_set[order_1][order_2]:
                             linear_fitting(x=x, y=y, axes=axes[order_1])
                     # Plot action potential superpositions
-                    elif x_name in superposition_name or y_name in superposition_name:
-                        if x_name in superposition_name and y_name in superposition_name:
-                            for i in range(len(x)):
-                                self.axes_plot(axes=axes[order_1], x=x[i], y=y[i])
+                    elif x_name in superposition_name and y_name in superposition_name and (
+                            type(x[0]) == type(np.array([])) or type(x[0]) == type(list)):
+                        for i in range(len(x)):
+                            self.axes_plot(axes=axes[order_1], x=x[i], y=y[i])
                     # Plot time series or phase portrait
                     else:
-                        self.axes_plot(axes=axes[order_1], x=x, y=y, label=label)
+                        self.axes_plot(axes=axes[order_1], x=x, y=y, label=label, color=color)
                         if 'Linear_fitting' in figure_set[order_1][order_2]:
                             linear_fitting(x=x, y=y, axes=axes[order_1])
                     if label:
@@ -78,19 +80,18 @@ class Plotting:
             if flag_mark_threshold_range == 1:
                 mark_threshold_range(order_1, figure_set, data, axes)
 
-
     @staticmethod
     def clear_axes(axes):
         for i in axes:
             axes[i].cla()
 
     @staticmethod
-    def axes_plot(axes, x, y, label=None):
-        axes.plot(x, y, label=label)
+    def axes_plot(axes, x, y, label=None, color=None):
+        axes.plot(x, y, label=label, color=color)
 
     @staticmethod
-    def axes_scatter(axes, x, y, label):
-        axes.scatter(x, y, label=label, color='r', marker='o', s=6, zorder=10)
+    def axes_scatter(axes, x, y, label, color):
+        axes.scatter(x, y, label=label, color=color, marker='o', s=12, zorder=10)
 
     @staticmethod
     def axes_fill_between(axes, Vth_range, y_min, y_max):
@@ -146,16 +147,20 @@ def get_x_y_data(data, figure_set, order_1, order_2):
     y_1 = y_all[0]
     y_2 = y_all[1]
     label = figure_set[order_1][order_2]['label']
+    if 'color' in figure_set[order_1][order_2]:
+        color = figure_set[order_1][order_2]['color']
+    else:
+        color = None
     if len(x_all) == 2:
         x = data[x_1][x_2]
         y = data[y_1][y_2]
-        return x, y, label, x_2, y_2
+        return x, y, label, color, x_2, y_2
     else:
         x_3 = x_all[2]
         y_3 = y_all[2]
         x = data[x_1][x_2][x_3]
         y = data[y_1][y_2][y_3]
-        return x, y, label, x_3, y_3
+        return x, y, label, color, x_3, y_3
 
 
 def plotting_condition_check(data, x_all, y_all):
@@ -195,8 +200,8 @@ def mark_threshold_point(order_1, figure_set, data, axes):
                 pass
             else:
                 if x_name_1 == y_name_1:
+                    timestamp_Vth = get_timestamp_Vth(data[x_name_1]['timestamp'])
                     timestamp = data[x_name_1]['timestamp']['timestamp']
-                    timestamp_Vth = data[x_name_1]['timestamp']['timestamp_Vth']
                     index_Vth = np.where(timestamp == timestamp_Vth)[0][0]
                     x = data[x_name_1][x_name_2][x_name_3][index_Vth]
                     y = data[y_name_1][y_name_2][y_name_3][index_Vth]
@@ -221,7 +226,7 @@ def mark_threshold_range(order_1, figure_set, data, axes):
                 pass
             else:
                 if x_name_1 == y_name_1:
-                    Vth = data[x_name_1]['features']['Vth'][0]
+                    Vth = get_Vth(data[x_name_1]['features'])
                     Vth_list.append(Vth)
                     array = copy.deepcopy(data[y_name_1][y_name_2][y_name_3])
                     array_list = np.hstack((array_list, array))
@@ -238,9 +243,10 @@ def linear_fitting(x, y, axes):
     """
     Performs linear fitting on the given data and plots the fit.
     """
-    R = np.corrcoef(x, y)[0, 1]
     x = np.array(x)
     y = np.array(y)
+    x, y = remove_nan_pairs(x, y)
+    R = np.corrcoef(x, y)[0, 1]
     model = LinearRegression()
     model.fit(x.reshape(-1, 1), y.reshape(-1, 1))
     coef = model.coef_[0, 0]
@@ -251,3 +257,17 @@ def linear_fitting(x, y, axes):
     axes.set_title('slope={}, r={}'.format(round(coef, 3), round(R, 3)), loc='right')
     logging.info(f'The equation of linear regression fit is y={coef}x+{intercept}')
     logging.info(f'The Pearson correlation coefficient is {R}')
+
+
+def get_timestamp_Vth(timestamp_dirct):
+    if 'timestamp_Vth_pred' in timestamp_dirct.keys():
+        return timestamp_dirct['timestamp_Vth_pred']
+    else:
+        return timestamp_dirct['timestamp_Vth']
+
+
+def get_Vth(features_direct):
+    for i in features_direct.keys():
+        if 'Vth_pred' in i:
+            return features_direct['Vth_pred'][0]
+    return features_direct['Vth'][0]

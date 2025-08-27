@@ -3,13 +3,13 @@ import logging
 import numpy as np
 from matplotlib import pyplot as plt
 
-from utils.threshold_equation import solve_threshold_model_euler, FormDynamics
+from utils.threshold_equation import solve_threshold_model_euler, FormOne
 
 
 def gama_factor(time_window_sigma, r_rec, N_coinc, N_rec, N_pred):
     # time_window_sigma: unit (ms), r_rec: unit 1/ms.
-    return (1 / (1 - 2 * time_window_sigma * r_rec)) * (
-            (N_coinc - 2 * N_rec * time_window_sigma * r_rec) / (N_rec + N_pred))
+    return (1. / (1. - 2. * time_window_sigma * r_rec)) * (
+            (N_coinc - 2. * N_rec * time_window_sigma * r_rec) / (N_rec/2. + N_pred/2.))
 
 
 def gama_factor_reverse(time_window_sigma, r_rec, N_coinc, N_rec, N_pred):

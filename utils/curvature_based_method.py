@@ -3,7 +3,7 @@ import logging
 import math
 from utils.condition_check import data_source_check, data_exists_check, spike_check
 from utils.tools import get_decimal_digits, get_voltage_from_AP_data, get_voltage_from_data, \
-    get_timestamp_from_data, get_max_num
+    get_timestamp_from_data, get_max_num, round_timestamp
 import copy
 import numpy as np
 import unicodeit
@@ -110,13 +110,14 @@ class MethodBasedOnCurvature:
         """Extract data of all single APs"""
         decimal_digits = get_decimal_digits(dt)
         AP_temporary = copy.deepcopy(AP)
+        timestamp = np.array(timestamp)
         for i in AP_temporary:
             AP[i]['features'] = {}
             if 'start' in AP[i]:
                 start = round(AP[i]['start'], decimal_digits)
                 stop = round(AP[i]['stop'], decimal_digits)
-                index1 = list(timestamp).index(start)
-                index2 = list(timestamp).index(stop)
+                index1 = np.argmin(np.abs(timestamp - start))
+                index2 = np.argmin(np.abs(timestamp - stop))
                 for j in data:
                     AP[i][j] = {}
                     for k in data[j]:
@@ -285,7 +286,7 @@ class MethodBasedOnCurvature:
         timestamp_Vth：float
             The time corresponding to spike threshold
         """
-        index_dvdt1_max = np.argmin(np.abs(dVdt_1-max(dVdt_1)))
+        index_dvdt1_max = np.argmin(np.abs(dVdt_1 - max(dVdt_1)))
         # Find the start of the region where dV/dt>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
             if dVdt_1[i] <= 0:
@@ -323,7 +324,7 @@ class MethodBasedOnCurvature:
         timestamp_Vth：float
             The time corresponding to spike threshold
         """
-        index_dvdt1_max = np.argmin(np.abs(dVdt_1-max(dVdt_1)))
+        index_dvdt1_max = np.argmin(np.abs(dVdt_1 - max(dVdt_1)))
         # Find the start of the region where dV/dt>0 in the phase space
         for i in range(index_dvdt1_max, -1, -1):
             if dVdt_1[i] <= 0:
@@ -392,6 +393,7 @@ class MethodBasedOnCurvature:
         """
         Generate the superposition of all extracted APs
         """
+        self.data = copy.deepcopy(self.AP)
         list_index_voltage_max = {}
 
         for i in self.AP:
@@ -437,15 +439,15 @@ class MethodBasedOnCurvature:
 
             timestamp_Vth_superposition = timestamp_superposition[
                 np.where(voltage_superposition == SpikeThresholds[j])[0][0]]
-            self.AP[j]['V_superposition'] = voltage_superposition
-            self.AP[j]['timestamp_superposition'] = timestamp_superposition
-            self.AP[j]['timestamp_Vth_superposition'] = timestamp_Vth_superposition
+            self.data[j]['timestamp']['timestamp_superposition'] = timestamp_superposition
+            self.data[j]['voltage']['V_superposition'] = voltage_superposition
+            self.data[j]['timestamp']['timestamp_Vth_superposition'] = [timestamp_Vth_superposition]
 
     def get_data(self, ISI):
         """
         Store data in self.data
         """
-        self.data = copy.deepcopy(self.AP)
+
         Vth_list = []
         timestamp_Vth_list = []
         V_superposition_list = []
@@ -453,15 +455,12 @@ class MethodBasedOnCurvature:
         timestamp_Vth_superposition_list = []
         for i in self.AP:
             Vth = self.AP[i]['features']['Vth'][0]
-            timestamp_Vth = self.AP[i]['timestamp']['timestamp_Vth']
-            V_superposition = self.AP[i]['V_superposition']
-            timestamp_superposition = self.AP[i]['timestamp_superposition']
-            timestamp_Vth_superposition = self.AP[i]['timestamp_Vth_superposition']
+            timestamp_Vth = self.data[i]['timestamp']['timestamp_Vth']
+            V_superposition = self.data[i]['voltage']['V_superposition']
+            timestamp_superposition = self.data[i]['timestamp']['timestamp_superposition']
+            timestamp_Vth_superposition = self.data[i]['timestamp']['timestamp_Vth_superposition'][0]
             self.data[i].pop('start')
             self.data[i].pop('stop')
-            self.data[i].pop('V_superposition')
-            self.data[i].pop('timestamp_superposition')
-            self.data[i].pop('timestamp_Vth_superposition')
             self.data[i].pop('index')
             Vth_list.append(Vth)
             timestamp_Vth_list.append(timestamp_Vth)
@@ -545,5 +544,34 @@ def calculate_extracted_AP_ISI(AP, list_voltage_max_moment, ISI_all, data_source
             AP[i]['features']['ISI'] = [ISI]
             AP_ISI.append(ISI)
         else:
-            AP_ISI.append(np.NAN)
+            AP_ISI.append(np.nan)
     return AP_ISI
+
+def ISI(voltage, timestamp, data, data_source, voltage_option):
+    """
+    desc: 向data中添加总的ISI和单个动作电位的ISI
+    """
+    isi = np.array([])
+    spike, spike_count, spike_flag = spike_check(voltage)
+    if not spike:
+        return isi
+    if spike_count<2:
+        return isi
+    list_voltage_max, list_voltage_max_moment, list_index_voltage_max = peak_time(voltage=voltage,spike_flag=spike_flag,timestamp=timestamp)
+    ISI_all, list_voltage_max = calculate_all_ISI(list_voltage_max_moment, list_voltage_max)
+    list_voltage_max_moment.pop(0)
+    AP_ISI = []
+    for i in data:
+        if 'AP' in i:
+            voltage = get_voltage_from_AP_data(AP_data=data, AP_name=i, data_source=data_source,
+                                               voltage_option=voltage_option)
+            timestamp = data[i]['timestamp']['timestamp']
+            timestamp_AP_voltage_max = timestamp[list(voltage).index(max(voltage))]
+            if timestamp_AP_voltage_max in list_voltage_max_moment:
+                order = list_voltage_max_moment.index(timestamp_AP_voltage_max)
+                ISI = ISI_all[order]
+                data[i]['features']['ISI'] = [ISI]
+                AP_ISI.append(ISI)
+            else:
+                AP_ISI.append(np.nan)
+    data['All']['features']['ISI'] = AP_ISI

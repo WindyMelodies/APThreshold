@@ -39,7 +39,7 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
 3. Set up conda environment  
     
     ```commandline
-    conda env create --name APThreshold --file environment.yml
+    conda env create --file environment.yml
     conda activate APThreshold
     ```
 4. Run APThreshold

@@ -58,18 +58,33 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
         """
         Open a file dialog to allow the user to select a data file, and read data.
         """
-        file_dialog = QFileDialog(self)
-        file_dialog.setFileMode(QFileDialog.ExistingFile)
+        name_filter = 'Data Files (*.dat *.mat *.txt *.bin)'
         data_path = os.path.join(os.path.abspath('.'), 'data')
-        file_dialog.setDirectory(data_path)
-        file_dialog.setNameFilter('(*.dat *.mat *.txt *.bin)')
-        file_dialog.show()
-        if file_dialog.exec():
-            self.file_path = file_dialog.selectedFiles()[0]
-            if self.file_path:
-                self.lineEdit_import_file.setText(os.path.split(self.file_path)[1])
-                self.read_data_file()
-        file_dialog.deleteLater()
+        if not os.path.exists(data_path):
+            os.makedirs(data_path)
+            logging.info(f"Created data directory: {data_path}")
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,  # 父组件
+            "Open File",  # 对话框标题
+            data_path,  # 初始目录
+            name_filter  # 文件过滤器
+        )
+        if file_path:
+            self.file_path = file_path
+            self.lineEdit_import_file.setText(os.path.split(self.file_path)[1])
+            self.read_data_file()
+        # file_dialog = QFileDialog(self)
+        # file_dialog.setFileMode(QFileDialog.ExistingFile)
+        # data_path = os.path.join(os.path.abspath('.'), 'data')
+        # file_dialog.setDirectory(data_path)
+        # file_dialog.setNameFilter('(*.dat *.mat *.txt *.bin)')
+        # file_dialog.show()
+        # if file_dialog.exec():
+        #     self.file_path = file_dialog.selectedFiles()[0]
+        #     if self.file_path:
+        #         self.lineEdit_import_file.setText(os.path.split(self.file_path)[1])
+        #         self.read_data_file()
+        # file_dialog.deleteLater()
 
     def read_data_file(self):
         """
@@ -152,8 +167,8 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
         voltage = []
         try:
             mat_data = sio.loadmat(self.file_path)
-            if 'voltage' in mat_data:
-                voltage = mat_data['voltage']
+            if 'vsoma' in mat_data:
+                voltage = mat_data['vsoma'][0]
                 if self.comboBox_unit_voltage.currentIndex() == 0:
                     voltage = voltage * 1000
             else:

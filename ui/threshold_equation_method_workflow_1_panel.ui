@@ -47,112 +47,7 @@ QGroupBox::title {
    <property name="verticalSpacing">
     <number>3</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QPushButton" name="pushButton_back_to_home_workflow_1">
-     <property name="text">
-      <string>Homepage</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/apprcc.qrc">
-       <normaloff>:/homepage.png</normaloff>:/homepage.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="pushButton_reset_workflow_1">
-     <property name="text">
-      <string>Reset</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/apprcc.qrc">
-       <normaloff>:/refresh.png</normaloff>:/refresh.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_threshold_euqation_workflow_1">
-     <property name="title">
-      <string>Vth prediction</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_threshold_equation_workflow_1">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox_threshold_equation_option_workflow_1">
-        <item>
-         <property name="text">
-          <string>Form one</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Form two</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Form three</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QPushButton" name="pushButton_run_workflow_1">
-        <property name="text">
-         <string>Run</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_threshold_equation_option_workflow_1">
-        <property name="text">
-         <string>Option</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QWebEngineView" name="webEngineView_threshold_equation_workflow_1">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="url">
-         <url>
-          <string>about:blank</string>
-         </url>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QPushButton" name="pushButton_config_threshold_params_workflow_1">
-        <property name="text">
-         <string>Configure equation parameters</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QPlainTextEdit" name="plainTextEdit_prediction_results">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="Feature_calculation_workflow_1">
      <property name="title">
       <string>Feature calculation</string>
@@ -186,6 +81,168 @@ QGroupBox::title {
       </item>
       <item row="1" column="0">
        <widget class="QTableWidget" name="tableWidget_features_workflow_1"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_threshold_euqation_workflow_1">
+     <property name="title">
+      <string>Vth prediction</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_threshold_equation_workflow_1">
+      <item row="3" column="0" colspan="2">
+       <widget class="QPushButton" name="pushButton_config_threshold_params_workflow_1">
+        <property name="text">
+         <string>Configure equation parameters</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QWebEngineView" name="webEngineView_threshold_equation_workflow_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="url">
+         <url>
+          <string>about:blank</string>
+         </url>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QPushButton" name="pushButton_run_workflow_1">
+        <property name="text">
+         <string>Run</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBox_threshold_equation_option_workflow_1">
+        <item>
+         <property name="text">
+          <string>Form one</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Form two</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Form three</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_threshold_equation_option_workflow_1">
+        <property name="text">
+         <string>Option</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="pushButton_reset_workflow_1">
+     <property name="text">
+      <string>Reset</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/apprcc.qrc">
+       <normaloff>:/refresh.png</normaloff>:/refresh.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_back_to_home_workflow_1">
+     <property name="text">
+      <string>Homepage</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/apprcc.qrc">
+       <normaloff>:/homepage.png</normaloff>:/homepage.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Prediction performance</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>False alarms</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Time window σ (ms)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineEdit_ev">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit_fa">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_time_window">
+        <property name="value">
+         <double>0.840000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Explained variance</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QPushButton" name="pushButton_calculate">
+        <property name="text">
+         <string>Calculate</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -8,7 +8,7 @@ import unicodeit
 from PySide6.QtWidgets import QWidget
 from ui import Ui_Form_paras_of_features
 from utils.condition_check import data_source_check
-from utils.tools import get_AP_or_K_names
+from utils.tools import get_AP_or_K_names, add_features_to_TableWidget_threshold_equation
 
 
 class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
@@ -26,13 +26,14 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
         self.tableWidget = tableWidget
         self.data = data
         self.set_slot_func()
-        if sender_name:
+        self.sender_name = sender_name
+        if sender_name == 'Ramp':
             # For ramp stimulation-based method
             self.data_source = 'simulation'
             self.voltage_option = self.MainWindow.rampMethod_window.comboBox_voltage_ramp.currentText()
             self.dt = self.MainWindow.rampMethod_window.doubleSpinBox_dt_ramp.value()
         else:
-            # For waveform curvature-based method
+            # For waveform curvature-based method and threshold equation-based method
             self.data_source, self.voltage_option, _, self.dt = data_source_check(self.MainWindow)
 
     def set_slot_func(self):
@@ -57,8 +58,12 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                 break
             num += 1
         self.option['<Vm>'] = time_period_Vm
-        self.get_features()
-        self.MainWindow.add_features_to_TableWidget(tableWidget_features=self.tableWidget, data=self.data)
+        if self.sender_name == 'threshold_equation':
+            self.get_features_threshold_equation()
+            add_features_to_TableWidget_threshold_equation(self.tableWidget, self.data)
+        else:
+            self.get_features()
+            self.MainWindow.add_features_to_TableWidget(tableWidget_features=self.tableWidget, data=self.data)
 
     def get_features(self):
         """
@@ -139,6 +144,85 @@ class CalculateFeatureWindow(QWidget, Ui_Form_paras_of_features):
                 average_Vm_list.append(average_V)
                 self.data[i]['features']['<V>'] = [average_V]
             self.data['All']['features']['<V>'] = average_Vm_list
+
+    def get_features_threshold_equation(self):
+        """
+        Calculate features: depolarization rate (dV/dt) and average membrane voltage (<Vm>) of action potentials,
+        based on the selected options and store them in the data dictionary.
+        """
+        name_list = get_AP_or_K_names(self.data)
+        logging.info('Option of feature calculation：{}'.format(self.option))
+        # Calculate depolarization rate dV/dt
+        if self.option['dV/dt'][0] is None or self.option['dV/dt'][1] == 0:
+            pass
+        else:
+            time_period = self.option['dV/dt'][1]
+            dVdt_list = []
+            if self.option['dV/dt'][0] == 1:  # Average of dVm/dt over a time period
+                for i in name_list:
+                    spike_moment = np.array(self.data[i]['timestamp']['timestamp_Vth_pred'])
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
+                    if self.data_source == 'simulation':
+                        dVdt_1 = self.data[i]['derivative voltage'][
+                            unicodeit.replace('d{}/dt'.format(self.voltage_option))]
+                    else:
+                        dVdt_1 = self.data[i]['voltage'][unicodeit.replace('dV/dt')]
+                    dVdt = self.dVdt_average(spike_moment=spike_moment, timestamp=timestamp, time_period=time_period,
+                                             dVdt_1=dVdt_1)
+                    dVdt_list.append(dVdt)
+                    self.data[i]['features']['dV/dt_pred'] = [dVdt]
+                    logging.info(f'{i} : {dVdt}')
+
+            if self.option['dV/dt'][0] == 2:  # Slope of Vm within a time period
+
+                for i in name_list:
+                    spike_moment = np.array(self.data[i]['timestamp']['timestamp_Vth_pred'])
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
+                    if self.data_source == 'simulation':
+                        voltage = self.data[i]['voltage']['{}'.format(self.voltage_option)]
+                    else:
+                        voltage = self.data[i]['voltage']['voltage']
+                    dVdt = self.dVdt_slope(spike_moment=spike_moment, timestamp=timestamp, time_period=time_period,
+                                           voltage=voltage)
+                    dVdt_list.append(dVdt)
+                    self.data[i]['features']['dV/dt_pred'] = [dVdt]
+                    logging.info(f'{i} : {dVdt}')
+
+            if self.option['dV/dt'][0] == 3:  # Maximum of dVm/dt during upstroke
+                for i in name_list:
+                    spike_moment = np.array(self.data[i]['timestamp']['timestamp_Vth_pred'])
+                    timestamp = np.array(self.data[i]['timestamp']['timestamp'])
+                    if self.data_source == 'simulation':
+                        dVdt_1 = self.data[i]['derivative voltage'][
+                            unicodeit.replace('d{}/dt'.format(self.voltage_option))]
+                        voltage = self.data[i]['voltage']['{}'.format(self.voltage_option)]
+                    else:
+                        dVdt_1 = self.data[i]['voltage'][unicodeit.replace('dV/dt')]
+                        voltage = self.data[i]['voltage']['voltage']
+                    dVdt = self.dVdt_max(spike_moment=spike_moment, timestamp=timestamp,
+                                         dVdt_1=dVdt_1, voltage=voltage)
+                    dVdt_list.append(dVdt)
+                    self.data[i]['features']['dV/dt_pred'] = [dVdt]
+            self.data['All']['features']['dV/dt_pred'] = dVdt_list
+
+        # Calculate average membrane voltage <V>
+        average_Vm_list = []
+        if self.option['<Vm>'] == 0:
+            pass
+        else:
+            time_period = self.option['<Vm>']
+            for i in name_list:
+                spike_moment = np.array(self.data[i]['timestamp']['timestamp_Vth_pred'])
+                timestamp = np.array(self.data[i]['timestamp']['timestamp'])
+                if self.data_source == 'simulation':
+                    voltage = self.data[i]['voltage']['{}'.format(self.voltage_option)]
+                else:
+                    voltage = self.data[i]['voltage']['voltage']
+                average_V = self.average_V(spike_moment=spike_moment, time_period=time_period,
+                                           timestamp=timestamp, voltage=voltage)
+                average_Vm_list.append(average_V)
+                self.data[i]['features']['<V>_pred'] = [average_V]
+            self.data['All']['features']['<V>_pred'] = average_Vm_list
 
     def cancel_clicked(self):
         self.close()

@@ -8,9 +8,10 @@ import re
 import h5py
 import scipy
 import unicodeit
-from PySide6.QtWidgets import QFileDialog, QMessageBox
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QAbstractItemView, QHeaderView, QTableWidgetItem
 import numpy as np
 from scipy.signal import find_peaks
+from utils.threshold_equation import FormOne, FormTwo, FormThree
 
 
 def add_item_to_combox(name_list, combobox):
@@ -271,6 +272,8 @@ def identify_single_aps(index_peaks, voltage, dVdt1, timestamp):
             left_ind_1 = 0
         left_ind_2 = np.where(dV_before_peak[left_ind_1:] > 0)[0][0]
         start_index = left_ind_front + left_ind_1 + left_ind_2
+        # if start_index==0:
+        #     start_index+=2
         # identify AP offset
         if spike_num == len(index_peaks) - 1:
             index_after_peak = timestamp >= timestamp[index_peaks[spike_num]]
@@ -317,3 +320,128 @@ def detect_spike(voltage):
                                 width=None)
     print("get_index_peaks：当前膜电压序列中存在放电{}次。".format(len(index_peaks)))
     return index_peaks
+
+
+def get_threshold_equation(combobox_index):
+    if combobox_index == 1:
+        return FormOne
+    elif combobox_index == 2:
+        return FormTwo
+    elif combobox_index==3:
+        return FormThree
+
+def get_kwargs_for_optimization():
+    pass
+
+def explained_variance(Vth_est, Vth_pred):
+    average_threshold_estimated = np.average(Vth_est)
+    part1 = 0.
+    part2 = 0.
+    for i in range(len(Vth_pred)):
+        part1 += (Vth_pred[i]-Vth_est[i])**2
+        part2 += (Vth_est[i]-average_threshold_estimated)**2
+    ev = 1. - (part1 / part2)
+    return ev
+
+def false_alarms(time_window, timestamp, voltage, theta):
+    recorded_spike_numbers = 0
+    if recorded_spike_numbers == 0:
+
+        return np.nan
+
+def str_in_dir(a_str, a_dict):
+    temp = []
+    for i in a_dict.keys():
+        if a_str in i:
+            temp.append(i)
+    if len(temp)>0:
+        return True
+    else:
+        return False
+
+def float_equality_judgement(num, array):
+    array = np.asarray(array)
+    mask = ~np.isnan(array)  # 保留不是 nan 的元素
+    if not np.any(mask):
+        raise ValueError("All elements are NaN.")
+    valid_array = array[mask]
+    min_index_in_valid = np.argmin(np.abs(valid_array - num))
+
+    # 映射回原始 array 的索引
+    original_indices = np.where(mask)[0]
+    return original_indices[min_index_in_valid]
+
+def add_features_to_TableWidget_threshold_equation(tableWidget_features, data):
+    """
+    Add calculated spike features to table widget.
+    """
+    tableWidget_features.clear()
+
+    font = tableWidget_features.horizontalHeader().font()
+    font.setBold(True)
+    tableWidget_features.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+    # Set the vertical title of the table
+    tableWidget_features.setRowCount(len(data) - 1)
+    row = 0
+    for i in data:
+        if i == 'All':
+            pass
+        else:
+            item = QTableWidgetItem()
+            item.setText(i)
+            tableWidget_features.setVerticalHeaderItem(row, item)
+            row += 1
+    # Set the horizontal title of the table
+    # Vth: spike threshold, t_Vth: time of spike threshold, ISI: inter-spike interval, dV/dt:rate of depolarization
+    # <V>: average voltage preceding to spike
+    col_names = ['Vth', 't_Vth', 'ISI', 'dV/dt', '<V>']
+    col_count = 5
+    tableWidget_features.setColumnCount(col_count)
+    col = 0
+    for i in col_names:
+        item = QTableWidgetItem()
+        item.setText(i)
+        tableWidget_features.setHorizontalHeaderItem(col, item)
+        tableWidget_features.setColumnWidth(col, 50)
+        col += 1
+    row = 0
+    for i in data:
+        if i == 'All':
+            pass
+        else:
+            item_Vth = QTableWidgetItem()
+            item_Vth.setText(str(round(data[i]['features']['Vth_pred'][0], 3)))
+            tableWidget_features.setItem(row, 0, item_Vth)
+            item_t_Vth = QTableWidgetItem()
+            item_t_Vth.setText(str(round(data[i]['timestamp']['timestamp_Vth_pred'][0], 3)))
+            tableWidget_features.setItem(row, 1, item_t_Vth)
+            if 'ISI' in data[i]['features']:
+                item_ISI = QTableWidgetItem()
+                item_ISI.setText(str(round(data[i]['features']['ISI'][0], 3)))
+                tableWidget_features.setItem(row, 2, item_ISI)
+            if 'dV/dt_pred' in data[i]['features']:
+                item_dVdt = QTableWidgetItem()
+                item_dVdt.setText(str(round(data[i]['features']['dV/dt_pred'][0], 3)))
+                tableWidget_features.setItem(row, 3, item_dVdt)
+            if '<V>_pred' in data[i]['features']:
+                item_average_V = QTableWidgetItem()
+                item_average_V.setText(str(round(data[i]['features']['<V>_pred'][0], 3)))
+                tableWidget_features.setItem(row, 4, item_average_V)
+            row += 1
+    tableWidget_features.horizontalHeader().setStretchLastSection(True)  # Stretch the last column to fill the space
+    tableWidget_features.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+
+def remove_nan_pairs(X, Y):
+    X = np.asarray(X)
+    Y = np.asarray(Y)
+
+    # 构造掩码：仅当 X 和 Y 在同一位置都不是 NaN 时为 True
+    mask = ~np.isnan(X) & ~np.isnan(Y)
+
+    # 同时过滤 X 和 Y
+    X_clean = X[mask]
+    Y_clean = Y[mask]
+
+    return X_clean, Y_clean

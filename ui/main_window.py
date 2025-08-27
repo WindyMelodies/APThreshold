@@ -47,11 +47,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.figure_set_experiment = None
         self.figure_set_curvature = None
         self.figure_set_ramp = None
+        self.figure_set_threshold_equation = None
         self.ParasOfFeaturesWindow = None
 
         self.names_window = {}  # Store sub-windows embedded in the main user interface
         self.names = {}  # Store all current stimulus pages
-        self.names_fig = {}  # Store all figure
+        self.names_fig = {}  # Store all figures
         self.AP = {}
 
         self.names_AP = {}  # AP: action potential
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.availableGeometry()
         width = 1000
-        height = 700
+        height = 800
         x = (screen_geometry.width() - width) // 2
         y = (screen_geometry.height() - height) // 2
         self.setGeometry(QRect(x, y, width, height))
@@ -159,6 +160,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.lineEdit_mean_Vth.setText("{:.3f}".format(Vth_mean))
                     self.lineEdit_maximum_Vth.setText("{:.3f}".format(Vth_max))
                     self.lineEdit_minimum_Vth.setText("{:.3f}".format(Vth_min))
+
+                    self.groupBox_Vth.setTitle("Estimated Vth info")
 
     def widget_physiological_data_init(self):
         """Initiate widget objective for importing experimental data"""
@@ -322,8 +325,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                       timestamp=timestamp)
             if self.names_AP:
                 for name in self.names_AP:
+                    self.names_AP[name].setParent(self)
                     self.names_AP[name].deleteLater()
-                self.AP = {}
+                    if name in self.AP:
+                        self.AP.pop(name)
+                self.names_AP.clear()
+
+
             for i in range(len(ap_start_stop_index)):
                 widgets = self.scrollAreaWidgetContents_aps.findChildren(QPushButton)
                 if len(widgets) == 0:
@@ -492,6 +500,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif self.toolBox_calculate_spike_threshold.currentIndex() == 1:
             if self.rampMethod_window.data:
                 self.names_window['SetFigWindow_Vth'] = SetFigWindowVth(data_operation_module=self.rampMethod_window,
+                                                                        main_window=self)
+                self.names_window['SetFigWindow_Vth'].show()
+            else:
+                msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Please run first!')
+                msg_box.exec()
+        elif self.toolBox_calculate_spike_threshold.currentIndex() == 2:
+            if self.threshold_equation_workflow_1_panel.data:
+                self.names_window['SetFigWindow_Vth'] = SetFigWindowVth(data_operation_module=self.threshold_equation_workflow_1_panel,
                                                                         main_window=self)
                 self.names_window['SetFigWindow_Vth'].show()
             else:

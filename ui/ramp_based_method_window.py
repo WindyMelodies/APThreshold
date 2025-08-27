@@ -56,7 +56,7 @@ class RampMethodWindow(QWidget, Ui_RampMethodWindow):
             self.ParasOfFeaturesWindow = CalculateFeatureWindow(mainWindow=self.main_window, data=self.data,
                                                                 features_option=self.features_option,
                                                                 tableWidget=self.tableWidget_features_ramp, sender_name=
-                                                                'Y')
+                                                                'Ramp')
             self.ParasOfFeaturesWindow.show()
 
     def update_combobox_current_ramp(self):

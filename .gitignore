@@ -1,5 +1,4 @@
 /Logs.docx
-/.ignore/
 /.idea/
 /data/1、560678127_ephys_sweep38/
 /data/2、559387602_ephys_sweep46/
@@ -13,3 +12,19 @@
 /ui/__pycache_
 /models/__pycache_
 /adhoc/
+/outcmaes/
+/WebViewWindow.py
+/打开HDF5.py
+/拟合过程显示界面.py
+/拟合过程显示界面1.py
+/阈值稳态曲线.py
+/阈值稳态曲线范围.py
+/report.log
+/fitting_result.pkl
+/1.py
+/2.py
+/123.py
+/number.py
+/dist
+/build
+/.ignore

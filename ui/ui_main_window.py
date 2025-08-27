@@ -747,10 +747,10 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget_main.setCurrentIndex(1)
+        self.tabWidget_main.setCurrentIndex(0)
         self.toolBox_aquire_ap.setCurrentIndex(0)
         self.tabWidget_stimulus.setCurrentIndex(0)
-        self.toolBox_calculate_spike_threshold.setCurrentIndex(2)
+        self.toolBox_calculate_spike_threshold.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
