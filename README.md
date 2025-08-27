@@ -1,20 +1,7 @@
 # Action potential threshold dynamics analyzer (APThreshold)
 
 ## Overview
-The action potential (AP) threshold controls spike initiation in single neurons and exhibits
-considerable variability with recent firing history and input properties. Spike threshold dynamics enables neurons
-to perform temporally precise coding. Quantifying and analyzing threshold dynamics usually requires multiple
-ad-hoc programming, that is, obtaining APs, identifying threshold voltage, calculating spike features, and data
-visualization. To facilitate analysis efficiency, we present the AP threshold dynamics analyzer (APThreshold),
-which is a Python-based software tool with a user-friendly graphic user interface (GUI). We
-implement the waveform curvature-based and ramp stimulation-based methods for threshold identification in
-the software. The GUI is designed as an interactive tool, which enables users to visualize the data in a point-andclick manner and customize the coordinate axes of each plot without programming. This endows APThreshold
-with the ability to examine the relationship between threshold voltage and spike features and analyze its
-underlying biophysical basis. We provide three example workflows of how to use our software to
-quantify the threshold dynamics in biophysical models or experimental recordings. The example results validate
-the functionality and efficiency of the software in identifying spike threshold with the implemented methods.
-Significance. APThreshold could be applied as an effective tool to analyze the threshold variability across cell
-types.
+The action potential (AP) threshold controls spike initiation in single neurons and exhibits considerable variability with recent firing history and input properties. Spike threshold dynamics enables neurons to perform temporally precise coding. Quantifying and analyzing threshold dynamics usually requires multiple ad-hoc programming, that is, obtaining APs, identifying threshold voltage, calculating spike features, and data visualization. To facilitate analysis efficiency, we present the AP threshold dynamics analyzer (APThreshold), which is a Python-based software tool with a user-friendly graphic user interface (GUI). We implement the waveform curvature-based and ramp stimulation-based methods for threshold identification in the software. The GUI is designed as an interactive tool, which enables users to visualize the data in a point-and-click manner and customize the coordinate axes of each plot without programming. This endows APThreshold with the ability to examine the relationship between threshold voltage and spike features and analyze its underlying biophysical basis. We provide three example workflows of how to use our software to quantify the threshold dynamics in biophysical models or experimental recordings. The example results validate the functionality and efficiency of the software in identifying spike threshold with the implemented methods. Significance. APThreshold could be applied as an effective tool to analyze the threshold variability across cell types.
 
 ## Features
 - Simulate biophysical models
@@ -37,7 +24,7 @@ We recommend using Anaconda to deploy the Python environment for APThreshold.
    git clone https://github.com/WindyMelodies/APThreshold.git
    ```
 3. Set up conda environment  
-    
+   
     ```commandline
     conda env create --name APThreshold --file environment.yml
     conda activate APThreshold
@@ -67,7 +54,7 @@ If you have issues, please contact us at guoshengyi@tju.edu.cn or pengzhanzhang@
 ## Cite
 
 If our software is helpful to your research, please cite the following reference in which we present APThreshold and demonstrate its ability with several use cases:
-> ... Action potential threshold dynamics analyzer (APThreshold) ... todo
+> G.S. Yi, P.Z. Zhang, R.F. Bai, APThreshold: A software tool for quantifying and analyzing action potential threshold dynamics, Neurocomputing 650 (2025) 130894. doi: https://doi.org/10.1016/j.neucom.2025.130894.
 > 
 ## Author
 Guosheng Yi, Pengzhan Zhang and Ruifeng Bai*  
