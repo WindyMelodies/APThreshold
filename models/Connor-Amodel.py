@@ -1,4 +1,6 @@
+from numba import jit
 import numpy as np
+
 
 
 class Model:
@@ -13,7 +15,7 @@ class Model:
     gk = 20
     gna = 120
     gl = 0.3
-    gA = 60         # typeI：60  typeII：0，30
+    gA = 60  # typeI：60  typeII：0，30
     MSHFT = -5.3
     HSHFT = -12
     NSHFT = -4.3

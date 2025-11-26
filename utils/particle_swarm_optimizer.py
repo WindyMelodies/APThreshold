@@ -50,7 +50,7 @@ class PSO:
         self.x_i_best = None  # 粒子个体历史最优位置
         self.f_i_best = None  # 粒子个体历史最优目标函数值
 
-    def optimize(self, objective_func, max_iter=100, ftol=1e-4, ftol_iter=5, **kwargs):
+    def optimize(self, objective_func, max_iter=100, ftol=1e-4, ftol_iter=5, kwargs=None):
         """
         运行PSO优化过程
         两种终止条件
@@ -64,7 +64,10 @@ class PSO:
             **kwargs: 目标函数的额外参数
         """
         # 初始化个体历史最佳位置和值
-        self.f_i_best = [objective_func(self.x[i], **kwargs) for i in range(self.pop_size)]
+        self.f_i_best = []
+        for i in range(self.pop_size):
+            temp = objective_func(self.x[i], kwargs)
+            self.f_i_best.append(temp)
         self.x_i_best = self.x.copy()
 
         # 初始化全局最佳位置和值
@@ -100,7 +103,7 @@ class PSO:
 
             # 更新个体和全局最佳位置
             for i in range(self.pop_size):
-                f_i = objective_func(self.x[i], **kwargs)
+                f_i = objective_func(self.x[i], kwargs)
                 if f_i < self.f_i_best[i]:
                     self.f_i_best[i] = f_i
                     self.x_i_best[i] = self.x[i].copy()
@@ -209,4 +212,3 @@ if __name__ == "__main__":
     )
     # 4. 运行优化并打印结果
     pso_optimizer.optimize(objective_func=rastrigin_function,max_iter=max_iter,ftol=-1 )
-

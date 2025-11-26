@@ -455,7 +455,7 @@ class MethodBasedOnCurvature:
         timestamp_Vth_superposition_list = []
         for i in self.AP:
             Vth = self.AP[i]['features']['Vth'][0]
-            timestamp_Vth = self.data[i]['timestamp']['timestamp_Vth']
+            timestamp_Vth = self.data[i]['timestamp']['timestamp_Vth'][0]
             V_superposition = self.data[i]['voltage']['V_superposition']
             timestamp_superposition = self.data[i]['timestamp']['timestamp_superposition']
             timestamp_Vth_superposition = self.data[i]['timestamp']['timestamp_Vth_superposition'][0]

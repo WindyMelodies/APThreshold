@@ -1,8 +1,10 @@
 import copy
 import numpy as np
 from ui.configure_equation_parameters_workflow1 import ConfigureEquationParametersWindow
+from ui.configure_stimulation_window import ConfigureStimulationWindow
 from ui.html_mathml import html_mathml_1, html_mathml_2, html_mathml_3
 from ui.set_fig_window_Vth import SetFigWindowVth
+from ui.ui_threshold_equation_method_workflow_2_panel import Ui_workflow_2_panel
 from ui.ui_threshold_euqation_method_main_window import Ui_threshold_euqation_method_main_window
 from ui.ui_threshold_equation_method_workflow_1_panel import Ui_workflow_1_panel
 from PySide6.QtWidgets import QWidget, QMessageBox, QAbstractItemView, QTableWidgetItem, QHeaderView
@@ -24,6 +26,44 @@ class ThresholdEquationMethodMainWindow(QWidget, Ui_threshold_euqation_method_ma
         super().__init__()
         self.setupUi(self)
 
+class ThresholdEquationMethodWorkflowTwoWindow(QWidget, Ui_workflow_2_panel):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.configure_stimulation_window = ConfigureStimulationWindow()
+        self.signal_slot()
+        self.show_equation_form()
+
+    def signal_slot(self):
+        self.pushButton_set_stimulation.clicked.connect(self.configure_stimulation_window.show)
+        self.comboBox_threshold_equation_option.currentIndexChanged.connect(self.show_equation_form)
+        self.webEngineView_threshold_equation.loadFinished.connect(self.adjust_height)
+
+    def show_equation_form(self):
+        index = self.comboBox_threshold_equation_option.currentIndex() + 1
+        if index == 1:
+            self.webEngineView_threshold_equation.setHtml(html_mathml_1)
+        elif index == 2:
+            self.webEngineView_threshold_equation.setHtml(html_mathml_2)
+        elif index == 3:
+            self.webEngineView_threshold_equation.setHtml(html_mathml_3)
+
+    def adjust_height(self):
+        # 使用 JavaScript 获取文档高度
+        self.webEngineView_threshold_equation.page().runJavaScript("""
+                Math.max(
+                    document.body.scrollHeight, 
+                    document.body.offsetHeight, 
+                    document.documentElement.clientHeight, 
+                    document.documentElement.scrollHeight, 
+                    document.documentElement.offsetHeight
+                );
+            """, 0, self.set_height)
+
+    def set_height(self, height):
+        if height and isinstance(height, (int, float)):
+            # 设置最小高度为计算高度 + 10px 的边距
+            self.webEngineView_threshold_equation.setMinimumHeight(int(height))
 
 class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
 
@@ -166,9 +206,9 @@ class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
         # Step 6
         condition_1 = False
         # 判断是否提取单个动作电位以及是否对提取的单个动作电位已经进行阈值估计:condition_1
+        AP = self.main_window.AP
         if len(self.main_window.AP) > 0 and self.main_window.CurvatureSpikeThreshold:
             data_estimated = self.main_window.CurvatureSpikeThreshold.data
-            AP = self.main_window.AP
             condition_1 = identify_APs_consistent(AP=AP, data=data_estimated, dt=dt)
         single_AP = False
         if condition_1:
@@ -179,7 +219,8 @@ class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
             # 判断是否提取单个动作电位。如果是，则提取单个动作电位数据，并估计单个动作电位的阈值。
             # 这里AP有两种可能，第一种是仅含有开始和结束时间，第二种可能是含有单个动作电位的所有数据。
             # 在当前这种情况下，未估计放电阈值（则AP仅有时间信息），或者AP和估计阈值不对应（则AP仅有时间信息），则需要重新提取动作电位。
-            # 考虑到AP需要赋值给data，而包含完整放电数据的AP占用空间较大，复制过程耗时，所以直接对data进行操作。
+            # 基于AP计算放电特征等数据，然后直接将数据存放至data。
+
             decimal_digits = get_decimal_digits(dt)
             timestamp = np.array(timestamp)
 
@@ -228,9 +269,13 @@ class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
             SpikeThresholds_pred = {}
             for i in AP:
                 spike_threshold = self.data[i]['features']['Vth_pred']
-                SpikeThresholds_pred[i] = spike_threshold
+                SpikeThresholds_pred[i] = spike_threshold[0]
+                if  not SpikeThresholds_pred[i]:
+                    print("BG!!!")
                 timestamp_superposition = self.data[i]['timestamp']['timestamp_superposition']
                 voltage_superposition = self.data[i]['voltage']['V_superposition']
+                print("curr SpikeThresholds_pred[i]:",SpikeThresholds_pred[i])
+                print("curr type(SpikeThresholds_pred[i]):", type(SpikeThresholds_pred[i]))
                 timestamp_Vth_superposition_pred = timestamp_superposition[
                     float_equality_judgement(num=SpikeThresholds_pred[i], array=voltage_superposition)]
                 self.data[i]['timestamp']['timestamp_Vth_superposition_pred'] = [timestamp_Vth_superposition_pred]
@@ -307,18 +352,12 @@ class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
             self.data['All']['features'][i] = temp_dict[i]
 
     def calculate_clicked(self):
-        """计算FA和EV。FA的前提是设置Time window以及提取单个动作电位；而EV的前提是已经估计单个动作电位"""
+        """计算FA和EV。FA的前提是设置Time window以及提取单个动作电位；而EV的前提是已经估计单个动作电位阈值"""
         # 1. 条件判断
         if not self.data:
             msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Run first!')
             msg_box.exec()
             return 0
-        # 2. 计算FA
-        fa = self.FA
-        if fa is np.nan:
-            self.lineEdit_fa.setText(' ')
-        else:
-            self.lineEdit_fa.setText(str(fa))
         # 3. 计算EV
         if 'Vth_est' in self.data['All']['features']:
             Vth_est = self.data['All']['features']['Vth_est']
@@ -327,6 +366,13 @@ class ThresholdEquationMethodWorkflowOneWindow(QWidget, Ui_workflow_1_panel):
             self.lineEdit_ev.setText(str(ev))
         else:
             self.lineEdit_ev.setText(" ")
+        # 2. 计算FA
+        fa = self.FA
+        if fa is np.nan:
+            self.lineEdit_fa.setText(' ')
+        else:
+            self.lineEdit_fa.setText(str(fa))
+
 
     @property
     def FA(self):

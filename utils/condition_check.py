@@ -2,7 +2,7 @@
 import logging
 
 import numpy as np
-
+from numba import jit
 
 def data_source_check(main_window):
     """
@@ -51,7 +51,7 @@ def data_exists_check(main_window):
     else:
         return False
 
-
+@jit(nopython=True)
 def spike_check(voltage):
     """
     Identify spikes in a voltage trace. A spike is identified when the voltage exceeds 0 mV and then decrease below 0 mV.
@@ -72,7 +72,7 @@ def spike_check(voltage):
                 spike_count += 1
                 spike_flag.append((pre_index, post_index))
     spike_count = len(spike_flag)
-    logging.info(f'Total number of spikes: {spike_count}')
+    # logging.info(f'Total number of spikes: {spike_count}')
     if spike_count == 0:
         spike = False
     else:

@@ -111,22 +111,6 @@ class Ui_workflow_1_panel(object):
 
         self.gridLayout.addWidget(self.groupBox_threshold_euqation_workflow_1, 1, 0, 1, 2)
 
-        self.pushButton_reset_workflow_1 = QPushButton(workflow_1_panel)
-        self.pushButton_reset_workflow_1.setObjectName(u"pushButton_reset_workflow_1")
-        icon1 = QIcon()
-        icon1.addFile(u":/refresh.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_reset_workflow_1.setIcon(icon1)
-
-        self.gridLayout.addWidget(self.pushButton_reset_workflow_1, 0, 1, 1, 1)
-
-        self.pushButton_back_to_home_workflow_1 = QPushButton(workflow_1_panel)
-        self.pushButton_back_to_home_workflow_1.setObjectName(u"pushButton_back_to_home_workflow_1")
-        icon2 = QIcon()
-        icon2.addFile(u":/homepage.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_back_to_home_workflow_1.setIcon(icon2)
-
-        self.gridLayout.addWidget(self.pushButton_back_to_home_workflow_1, 0, 0, 1, 1)
-
         self.groupBox = QGroupBox(workflow_1_panel)
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout_2 = QGridLayout(self.groupBox)
@@ -179,6 +163,14 @@ class Ui_workflow_1_panel(object):
 
         self.gridLayout.addWidget(self.groupBox, 2, 0, 1, 2)
 
+        self.pushButton_back_to_home_workflow_1 = QPushButton(workflow_1_panel)
+        self.pushButton_back_to_home_workflow_1.setObjectName(u"pushButton_back_to_home_workflow_1")
+        icon1 = QIcon()
+        icon1.addFile(u":/back.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_back_to_home_workflow_1.setIcon(icon1)
+
+        self.gridLayout.addWidget(self.pushButton_back_to_home_workflow_1, 0, 0, 1, 2)
+
 
         self.retranslateUi(workflow_1_panel)
 
@@ -196,13 +188,12 @@ class Ui_workflow_1_panel(object):
         self.comboBox_threshold_equation_option_workflow_1.setItemText(1, QCoreApplication.translate("workflow_1_panel", u"Form two", None))
         self.comboBox_threshold_equation_option_workflow_1.setItemText(2, QCoreApplication.translate("workflow_1_panel", u"Form three", None))
 
-        self.label_threshold_equation_option_workflow_1.setText(QCoreApplication.translate("workflow_1_panel", u"Option", None))
-        self.pushButton_reset_workflow_1.setText(QCoreApplication.translate("workflow_1_panel", u"Reset", None))
-        self.pushButton_back_to_home_workflow_1.setText(QCoreApplication.translate("workflow_1_panel", u"Homepage", None))
+        self.label_threshold_equation_option_workflow_1.setText(QCoreApplication.translate("workflow_1_panel", u"Equation option", None))
         self.groupBox.setTitle(QCoreApplication.translate("workflow_1_panel", u"Prediction performance", None))
         self.label_2.setText(QCoreApplication.translate("workflow_1_panel", u"False alarms", None))
         self.label.setText(QCoreApplication.translate("workflow_1_panel", u"Time window \u03c3 (ms)", None))
         self.label_3.setText(QCoreApplication.translate("workflow_1_panel", u"Explained variance", None))
         self.pushButton_calculate.setText(QCoreApplication.translate("workflow_1_panel", u"Calculate", None))
+        self.pushButton_back_to_home_workflow_1.setText(QCoreApplication.translate("workflow_1_panel", u"Back", None))
     # retranslateUi
 

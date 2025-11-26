@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>back.png</file>
+    <file>arrow_return_icon.png</file>
     <file>refresh.png</file>
     <file>homepage.png</file>
     <file>8678769_save_fill_data_icon.png</file>

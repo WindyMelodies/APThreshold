@@ -25,7 +25,7 @@ if __name__ == '__main__':
     w = MainWindow()
     w.show()
 
-    a = 2
+    a = 3
     if a == 1:
         w.comboBox_model.setCurrentIndex(4)
         w.names['doubleSpinBox_stim1_stop'].setValue(200)
@@ -41,14 +41,14 @@ if __name__ == '__main__':
         w.threshold_equation_workflow_1_panel.configure_parameters_window.pushButton_OK.click()
     elif a == 2:
         w.comboBox_model.setCurrentIndex(4)
-        stop = 2000
+        stop = 200
         tab_name = 'stim1'
 
         w.names['comboBox_' + tab_name].setCurrentIndex(3)
         w.names['doubleSpinBox_stim1_stop'].setValue(stop)
         w.names['doubleSpinBox_' + tab_name + '_mu'].setValue(10)
         w.names['doubleSpinBox_' + tab_name + '_theta'].setValue(3)
-        w.names['doubleSpinBox_' + tab_name + '_sigma'].setValue(20)
+        w.names['doubleSpinBox_' + tab_name + '_sigma'].setValue(5)
 
         # OU噪声刺激HH模型生成不规则放电序列
 
@@ -57,8 +57,8 @@ if __name__ == '__main__':
         w.comboBox_ode_option.setCurrentIndex(1)
         w.pushButton_simulation_run.click()
         w.pushButton_auto_extrac_APs.click()
-        w.pushButton_run_curvature.click()
-        w.threshold_equation_main_window.pushButton_workflow_1.click()
-        w.threshold_equation_workflow_1_panel.pushButton_config_threshold_params_workflow_1.click()
+        # w.pushButton_run_curvature.click()
+        # w.threshold_equation_main_window.pushButton_workflow_1.click()
+        # w.threshold_equation_workflow_1_panel.pushButton_config_threshold_params_workflow_1.click()
 
     app.exec()

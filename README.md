@@ -8,7 +8,7 @@ ad-hoc programming, that is, obtaining APs, identifying threshold voltage, calcu
 visualization. To facilitate analysis efficiency, we present the AP threshold dynamics analyzer (APThreshold),
 which is a Python-based software tool with a user-friendly graphic user interface (GUI). We
 implement the waveform curvature-based and ramp stimulation-based methods for threshold identification in
-the software. The GUI is designed as an interactive tool, which enables users to visualize the data in a point-andclick manner and customize the coordinate axes of each plot without programming. This endows APThreshold
+the software. The GUI is designed as an interactive tool, which enables users to visualize the data in a point-and-click manner and customize the coordinate axes of each plot without programming. This endows APThreshold
 with the ability to examine the relationship between threshold voltage and spike features and analyze its
 underlying biophysical basis. We provide three example workflows of how to use our software to
 quantify the threshold dynamics in biophysical models or experimental recordings. The example results validate

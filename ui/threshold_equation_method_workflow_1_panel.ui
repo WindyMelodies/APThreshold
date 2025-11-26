@@ -148,33 +148,11 @@ QGroupBox::title {
       <item row="0" column="0">
        <widget class="QLabel" name="label_threshold_equation_option_workflow_1">
         <property name="text">
-         <string>Option</string>
+         <string>Equation option</string>
         </property>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="pushButton_reset_workflow_1">
-     <property name="text">
-      <string>Reset</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/apprcc.qrc">
-       <normaloff>:/refresh.png</normaloff>:/refresh.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QPushButton" name="pushButton_back_to_home_workflow_1">
-     <property name="text">
-      <string>Homepage</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/apprcc.qrc">
-       <normaloff>:/homepage.png</normaloff>:/homepage.png</iconset>
-     </property>
     </widget>
    </item>
    <item row="2" column="0" colspan="2">
@@ -245,6 +223,17 @@ QGroupBox::title {
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QPushButton" name="pushButton_back_to_home_workflow_1">
+     <property name="text">
+      <string>Back</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/apprcc.qrc">
+       <normaloff>:/back.png</normaloff>:/back.png</iconset>
+     </property>
     </widget>
    </item>
   </layout>

@@ -16,7 +16,7 @@ from .ramp_based_method_window import RampMethodWindow
 from .set_fig_window_AP import SetFigWindowAP
 from .set_fig_window_Vth import SetFigWindowVth
 from .threshold_equation_method_window import ThresholdEquationMethodMainWindow, \
-    ThresholdEquationMethodWorkflowOneWindow
+    ThresholdEquationMethodWorkflowOneWindow, ThresholdEquationMethodWorkflowTwoWindow
 from .ui_main_window import Ui_MainWindow
 from utils.custom_navigation_toolbar import CustomNavigationToolbar as NavigationToolbar
 from utils.curvature_based_method import MethodBasedOnCurvature
@@ -171,12 +171,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def page_threshold_equation_method_init(self):
         self.threshold_equation_main_window = ThresholdEquationMethodMainWindow()
         self.threshold_equation_workflow_1_panel = ThresholdEquationMethodWorkflowOneWindow(main_window=self)
-        self.threshold_equation_workflow_2_panel = None
+        self.threshold_equation_workflow_2_panel = ThresholdEquationMethodWorkflowTwoWindow()
         self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_main_window)
         self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_workflow_1_panel)
+        self.stackedWidget_threshold_equation_method.addWidget(self.threshold_equation_workflow_2_panel)
+        self.threshold_equation_main_window.pushButton_workflow_2.clicked.connect(
+            lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(2))
         self.threshold_equation_main_window.pushButton_workflow_1.clicked.connect(
             lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(1))
         self.threshold_equation_workflow_1_panel.pushButton_back_to_home_workflow_1.clicked.connect(
+            lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(0))
+        self.threshold_equation_workflow_2_panel.pushButton_return.clicked.connect(
             lambda: self.stackedWidget_threshold_equation_method.setCurrentIndex(0))
 
     def page_ramp_method_init(self):
@@ -226,6 +231,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             elif self.toolBox_calculate_spike_threshold.currentIndex() == 1:
                 if self.rampMethod_window.data:
                     open_save_data_window(self.rampMethod_window.data)
+                else:
+                    msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Run first!')
+                    msg_box.exec()
+            elif self.toolBox_calculate_spike_threshold.currentIndex() == 2:
+                if self.threshold_equation_workflow_1_panel.data:
+                    open_save_data_window(self.threshold_equation_workflow_1_panel.data)
                 else:
                     msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Run first!')
                     msg_box.exec()
@@ -330,7 +341,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     if name in self.AP:
                         self.AP.pop(name)
                 self.names_AP.clear()
-
 
             for i in range(len(ap_start_stop_index)):
                 widgets = self.scrollAreaWidgetContents_aps.findChildren(QPushButton)
@@ -507,8 +517,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 msg_box.exec()
         elif self.toolBox_calculate_spike_threshold.currentIndex() == 2:
             if self.threshold_equation_workflow_1_panel.data:
-                self.names_window['SetFigWindow_Vth'] = SetFigWindowVth(data_operation_module=self.threshold_equation_workflow_1_panel,
-                                                                        main_window=self)
+                self.names_window['SetFigWindow_Vth'] = SetFigWindowVth(
+                    data_operation_module=self.threshold_equation_workflow_1_panel,
+                    main_window=self)
                 self.names_window['SetFigWindow_Vth'].show()
             else:
                 msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Please run first!')

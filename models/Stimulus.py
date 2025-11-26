@@ -6,6 +6,9 @@ import random
 import numpy as np
 
 
+
+
+
 class Stimulus:
     def __init__(self, t):
         self.All_currents_values = None
@@ -49,8 +52,9 @@ class Stimulus:
                     elif single_current['current_type'] == 'noise':
                         dt = 0.01  # todo 1、dt 2、ode solver
                         self.I_store_noise[i] += self.I_store_noise[i - 1] + ((
-                                mu - self.I_store_noise[i - 1]) /theta + sigma * random.gauss(0, 1)) *dt
+                                                                                      mu - self.I_store_noise[
+                                                                                  i - 1]) / theta + sigma * random.gauss(
+                            0, 1)) * dt
                         self.All_currents_values[i] += self.I_store_noise[i]
                     else:
                         pass
-

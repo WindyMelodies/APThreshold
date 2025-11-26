@@ -103,12 +103,12 @@ html_mathml_1 = """<html>
             <mrow>
             <msub>
             <mi>V</mi>
-            <mn>m</mn>
+            <mn>i</mn>
             </msub>
             <mn>&minus;</mn>
             <msub>
             <mi>V</mi>
-            <mn>i</mn>
+            <mn>m</mn>
             </msub>
             </mrow>
             </mstyle>
@@ -224,12 +224,12 @@ html_mathml_2 = """<html>
                         <mrow>
                         <msub>
                         <mi>V</mi>
-                        <mn>m</mn>
+                        <mn>i</mn>
                         </msub>
                         <mn>&minus;</mn>
                         <msub>
                         <mi>V</mi>
-                        <mn>i</mn>
+                        <mn>m</mn>
                         </msub>
                         </mrow>
                         </mstyle>

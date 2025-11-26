@@ -2,7 +2,7 @@ name: APThreshold
 channels:
   - defaults
 dependencies:
-  - python=3.11  # Python 3.13 不建议用在生产环境，兼容性差
+  - python=3.11
   - numpy
   - scikit-learn
   - h5py
@@ -11,5 +11,5 @@ dependencies:
       - unicodeit
       - scipy
       - cma
-      - pyside6  # 最新版，包含 QtWebEngin
+      - pyside6
       - matplotlib

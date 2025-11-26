@@ -1,7 +1,7 @@
 """Class for importing experimental recordings."""
 import logging
 import os
-
+import pickle
 import matplotlib.pyplot as plt
 import scipy.io as sio
 import struct
@@ -58,7 +58,7 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
         """
         Open a file dialog to allow the user to select a data file, and read data.
         """
-        name_filter = 'Data Files (*.dat *.mat *.txt *.bin)'
+        name_filter = 'Data Files (*.dat *.mat *.txt *.bin *.pkl)'
         data_path = os.path.join(os.path.abspath('.'), 'data')
         if not os.path.exists(data_path):
             os.makedirs(data_path)
@@ -108,6 +108,8 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
                         self.data = self.return_data(self.get_bin_data(), self.spinBox_sample_rate.value() * 1000)
                     if file_format == 'mat':
                         self.data = self.return_data(self.get_mat_data(), self.spinBox_sample_rate.value() * 1000)
+                    if file_format == 'pkl':
+                        self.data = self.return_data(self.get_pkl_data(), self.spinBox_sample_rate.value() * 1000)
                     spike, spike_count, spike_flag = spike_check(self.data['voltage']['voltage'])
                     # ISI calculation
                     ISI = np.array([])
@@ -140,6 +142,14 @@ class ImportDataWidget(Ui_import_datas_widget, QWidget):
         else:
             msg_box = QMessageBox(QMessageBox.Information, 'Message', 'Please import data！')
             msg_box.exec()
+
+    def get_pkl_data(self):
+        voltage = []
+        with open(self.file_path, 'rb') as f:
+            voltage = np.array(pickle.load(f))
+        if self.comboBox_unit_voltage.currentIndex() == 0:
+            voltage = voltage * 1000
+        return voltage
 
     def get_txt_data(self):
         voltage = []

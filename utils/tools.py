@@ -114,7 +114,7 @@ def get_voltage_from_AP_data(AP_data, AP_name, data_source, voltage_option=None)
     voltage = None
     if data_source == 'simulation':
         voltage = AP_data[AP_name]['voltage']['{}'.format(voltage_option)]
-    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat':
+    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat' or data_source == 'pkl':
         voltage = AP_data[AP_name]['voltage']['voltage']
     return voltage
 
@@ -123,7 +123,7 @@ def get_voltage_from_data(data, data_source, voltage_option=None):
     voltage = None
     if data_source == 'simulation':
         voltage = data['voltage'][voltage_option]
-    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat':
+    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat'or data_source == 'pkl' :
         voltage = data['voltage']['voltage']
     return voltage
 
@@ -132,7 +132,7 @@ def get_derivative_voltage_from_data(data, data_source, voltage_option=None):
     if data_source == 'simulation':
         dVdt_1 = data['derivative voltage'][unicodeit.replace(
             'd{}/dt'.format(voltage_option))]
-    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat':
+    if data_source == 'txt' or data_source == 'bin' or data_source == 'dat' or data_source == 'mat'or data_source == 'pkl' :
         dVdt_1 = data['voltage'][unicodeit.replace('dV/dt')]
     return dVdt_1
 
@@ -360,6 +360,8 @@ def str_in_dir(a_str, a_dict):
         return False
 
 def float_equality_judgement(num, array):
+    if not num:
+        return np.nan
     array = np.asarray(array)
     mask = ~np.isnan(array)  # 保留不是 nan 的元素
     if not np.any(mask):

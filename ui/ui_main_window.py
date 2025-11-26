@@ -20,9 +20,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QDo
     QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
     QLabel, QLayout, QLineEdit, QMainWindow,
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QSpinBox, QStackedWidget, QStatusBar, QTabWidget,
-    QTableWidget, QTableWidgetItem, QToolBox, QVBoxLayout,
-    QWidget)
+    QSpinBox, QStackedWidget, QTabWidget, QTableWidget,
+    QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
 import apprcc_rc
 
 class Ui_MainWindow(object):
@@ -98,8 +97,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "")
-        self.tabWidget_main.setTabPosition(QTabWidget.North)
-        self.tabWidget_main.setTabShape(QTabWidget.Rounded)
+        self.tabWidget_main.setTabPosition(QTabWidget.TabPosition.North)
+        self.tabWidget_main.setTabShape(QTabWidget.TabShape.Rounded)
         self.tabWidget_main.setUsesScrollButtons(False)
         self.tab_aquire_ap = QWidget()
         self.tab_aquire_ap.setObjectName(u"tab_aquire_ap")
@@ -127,7 +126,7 @@ class Ui_MainWindow(object):
 "")
         self.page_simulation = QWidget()
         self.page_simulation.setObjectName(u"page_simulation")
-        self.page_simulation.setGeometry(QRect(0, 0, 340, 726))
+        self.page_simulation.setGeometry(QRect(0, 0, 340, 746))
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
@@ -142,11 +141,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_horizontalWidget_simulation = QHBoxLayout(self.horizontalWidget_simulation)
         self.horizontalLayout_horizontalWidget_simulation.setSpacing(0)
         self.horizontalLayout_horizontalWidget_simulation.setObjectName(u"horizontalLayout_horizontalWidget_simulation")
-        self.horizontalLayout_horizontalWidget_simulation.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.horizontalLayout_horizontalWidget_simulation.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.horizontalLayout_horizontalWidget_simulation.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_model = QVBoxLayout()
         self.verticalLayout_model.setObjectName(u"verticalLayout_model")
-        self.verticalLayout_model.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.verticalLayout_model.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.groupBox_neuron_model = QGroupBox(self.horizontalWidget_simulation)
         self.groupBox_neuron_model.setObjectName(u"groupBox_neuron_model")
         self.gridLayout_4 = QGridLayout(self.groupBox_neuron_model)
@@ -247,7 +246,7 @@ class Ui_MainWindow(object):
         self.doubleSpinBox_dt = QDoubleSpinBox(self.groupBox_solving_ode)
         self.doubleSpinBox_dt.setObjectName(u"doubleSpinBox_dt")
         self.doubleSpinBox_dt.setDecimals(3)
-        self.doubleSpinBox_dt.setValue(0.001000000000000)
+        self.doubleSpinBox_dt.setValue(0.010000000000000)
 
         self.horizontalLayout_dt.addWidget(self.doubleSpinBox_dt)
 
@@ -282,7 +281,7 @@ class Ui_MainWindow(object):
         self.spinBox_timeline = QSpinBox(self.groupBox_solving_ode)
         self.spinBox_timeline.setObjectName(u"spinBox_timeline")
         self.spinBox_timeline.setMaximum(1000000000)
-        self.spinBox_timeline.setValue(200)
+        self.spinBox_timeline.setValue(2000)
 
         self.horizontalLayout_timeline.addWidget(self.spinBox_timeline)
 
@@ -334,7 +333,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_AP_fig = QGridLayout()
         self.gridLayout_AP_fig.setObjectName(u"gridLayout_AP_fig")
-        self.gridLayout_AP_fig.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.gridLayout_AP_fig.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.gridLayout_AP_fig.setHorizontalSpacing(6)
         self.gridLayout_AP_fig.setContentsMargins(0, 0, 0, 0)
         self.groupBox_extarct_aps = QGroupBox(self.widget_plot_AP_main)
@@ -357,7 +356,7 @@ class Ui_MainWindow(object):
         self.pushButton_add_ap.setMinimumSize(QSize(40, 0))
         self.pushButton_add_ap.setMaximumSize(QSize(23, 23))
         self.pushButton_add_ap.setMouseTracking(True)
-        self.pushButton_add_ap.setFocusPolicy(Qt.NoFocus)
+        self.pushButton_add_ap.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.pushButton_add_ap.setCheckable(False)
 
         self.gridLayout_aps_pushbutton.addWidget(self.pushButton_add_ap, 0, 1, 1, 1)
@@ -393,9 +392,9 @@ class Ui_MainWindow(object):
         sizePolicy8.setHeightForWidth(self.scrollArea_extract_aps.sizePolicy().hasHeightForWidth())
         self.scrollArea_extract_aps.setSizePolicy(sizePolicy8)
         self.scrollArea_extract_aps.setMaximumSize(QSize(16777215, 50))
-        self.scrollArea_extract_aps.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.scrollArea_extract_aps.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.scrollArea_extract_aps.setSizeAdjustPolicy(QAbstractScrollArea.AdjustIgnored)
+        self.scrollArea_extract_aps.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scrollArea_extract_aps.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scrollArea_extract_aps.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
         self.scrollArea_extract_aps.setWidgetResizable(True)
         self.scrollAreaWidgetContents_aps = QWidget()
         self.scrollAreaWidgetContents_aps.setObjectName(u"scrollAreaWidgetContents_aps")
@@ -513,7 +512,7 @@ class Ui_MainWindow(object):
 "    ")
         self.page_method_curvature = QWidget()
         self.page_method_curvature.setObjectName(u"page_method_curvature")
-        self.page_method_curvature.setGeometry(QRect(0, 0, 340, 695))
+        self.page_method_curvature.setGeometry(QRect(0, 0, 300, 218))
         sizePolicy11.setHeightForWidth(self.page_method_curvature.sizePolicy().hasHeightForWidth())
         self.page_method_curvature.setSizePolicy(sizePolicy11)
         self.page_method_curvature.setMinimumSize(QSize(300, 0))
@@ -595,7 +594,7 @@ class Ui_MainWindow(object):
         self.toolBox_calculate_spike_threshold.addItem(self.page_method_ramp, u"Ramp stimulation-based method")
         self.page_threshold_equation = QWidget()
         self.page_threshold_equation.setObjectName(u"page_threshold_equation")
-        self.page_threshold_equation.setGeometry(QRect(0, 0, 340, 695))
+        self.page_threshold_equation.setGeometry(QRect(0, 0, 100, 30))
         self.gridLayout_page_threshold_equation = QGridLayout(self.page_threshold_equation)
         self.gridLayout_page_threshold_equation.setSpacing(0)
         self.gridLayout_page_threshold_equation.setObjectName(u"gridLayout_page_threshold_equation")
@@ -621,7 +620,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setSpacing(6)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.groupBox_set_axes_Vth = QGroupBox(self.widget_plot_Vth)
         self.groupBox_set_axes_Vth.setObjectName(u"groupBox_set_axes_Vth")
         sizePolicy9.setHeightForWidth(self.groupBox_set_axes_Vth.sizePolicy().hasHeightForWidth())
@@ -741,15 +740,13 @@ class Ui_MainWindow(object):
         self.gridLayout_centralwidget.addWidget(self.tabWidget_main, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
 
         self.tabWidget_main.setCurrentIndex(0)
         self.toolBox_aquire_ap.setCurrentIndex(0)
         self.tabWidget_stimulus.setCurrentIndex(0)
+        self.comboBox_ode_option.setCurrentIndex(1)
         self.toolBox_calculate_spike_threshold.setCurrentIndex(0)
 
 

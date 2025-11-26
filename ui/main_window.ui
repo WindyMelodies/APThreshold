@@ -92,10 +92,10 @@ QGroupBox::title {
 </string>
       </property>
       <property name="tabPosition">
-       <enum>QTabWidget::North</enum>
+       <enum>QTabWidget::TabPosition::North</enum>
       </property>
       <property name="tabShape">
-       <enum>QTabWidget::Rounded</enum>
+       <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -158,7 +158,7 @@ QToolBox::tab {
              <x>0</x>
              <y>0</y>
              <width>340</width>
-             <height>726</height>
+             <height>746</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -193,7 +193,7 @@ QToolBox::tab {
                 <number>0</number>
                </property>
                <property name="sizeConstraint">
-                <enum>QLayout::SetDefaultConstraint</enum>
+                <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -210,7 +210,7 @@ QToolBox::tab {
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_model">
                  <property name="sizeConstraint">
-                  <enum>QLayout::SetDefaultConstraint</enum>
+                  <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
                  </property>
                  <item>
                   <widget class="QGroupBox" name="groupBox_neuron_model">
@@ -371,7 +371,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                          <number>3</number>
                         </property>
                         <property name="value">
-                         <double>0.001000000000000</double>
+                         <double>0.010000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -388,6 +388,9 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                       </item>
                       <item>
                        <widget class="QComboBox" name="comboBox_ode_option">
+                        <property name="currentIndex">
+                         <number>1</number>
+                        </property>
                         <item>
                          <property name="text">
                           <string>Odeint</string>
@@ -422,7 +425,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                          <number>1000000000</number>
                         </property>
                         <property name="value">
-                         <number>200</number>
+                         <number>2000</number>
                         </property>
                        </widget>
                       </item>
@@ -516,7 +519,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
            <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout_AP_fig">
              <property name="sizeConstraint">
-              <enum>QLayout::SetDefaultConstraint</enum>
+              <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -586,7 +589,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                      <bool>true</bool>
                     </property>
                     <property name="focusPolicy">
-                     <enum>Qt::NoFocus</enum>
+                     <enum>Qt::FocusPolicy::NoFocus</enum>
                     </property>
                     <property name="whatsThis">
                      <string>添加刺激电流</string>
@@ -675,13 +678,13 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                    </size>
                   </property>
                   <property name="verticalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAsNeeded</enum>
+                   <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
                   </property>
                   <property name="horizontalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAsNeeded</enum>
+                   <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                   <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
                   </property>
                   <property name="widgetResizable">
                    <bool>true</bool>
@@ -714,7 +717,7 @@ QTabBar::tab {height: 23px;min-width: 0px;margin-right: 5px;padding-left: 5px;pa
                     <item>
                      <spacer name="horizontalSpacer">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -937,8 +940,8 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>340</width>
-             <height>695</height>
+             <width>300</width>
+             <height>218</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -1141,8 +1144,8 @@ QToolBox::tab {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>340</width>
-             <height>695</height>
+             <width>100</width>
+             <height>30</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1207,7 +1210,7 @@ QToolBox::tab {
               <number>6</number>
              </property>
              <property name="sizeConstraint">
-              <enum>QLayout::SetDefaultConstraint</enum>
+              <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
              </property>
              <item>
               <widget class="QGroupBox" name="groupBox_set_axes_Vth">
@@ -1455,7 +1458,6 @@ QToolBox::tab {
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave_datas">
    <property name="icon">
     <iconset>
